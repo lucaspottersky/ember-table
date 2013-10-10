@@ -31,6 +31,7 @@ Ember.Table.TableBlock = Ember.CollectionView.extend Ember.StyleBindingsMixin,
   onScrollLeftDidChange: Ember.observer ->
     @$().scrollLeft @get('scrollLeft')
   , 'scrollLeft'
+
   height: Ember.computed ->
     @get('controller._headerHeight')
   .property('controller._headerHeight')
@@ -213,7 +214,6 @@ Ember.Table.HeaderRow = Ember.View.extend Ember.StyleBindingsMixin,
     update: jQuery.proxy(@onColumnSortDone,   this)
     stop:   jQuery.proxy(@onColumnSortStop,   this)
     sort:   jQuery.proxy(@onColumnSortChange, this)
-  .property()
 
   onScrollLeftDidChange: Ember.observer ->
     @$().scrollLeft @get('scrollLeft')
@@ -274,7 +274,6 @@ Ember.Table.HeaderCell = Ember.View.extend Ember.StyleBindingsMixin,
     grid:     @get('column.snapGrid')
     resize: jQuery.proxy(@onColumnResize, this)
     stop: jQuery.proxy(@onColumnResize, this)
-  .property()
 
   ###*
   * Did insert element callback
@@ -311,19 +310,6 @@ Ember.Table.HeaderCell = Ember.View.extend Ember.StyleBindingsMixin,
 
 ################################################################################
 
-Ember.Table.AddColumnButton = Ember.View.extend Ember.StyleBindingsMixin,
-  tagName: 'span'
-  template: Ember.Handlebars.compile(
-    '<span>+</span>')
-  styleBindings: ['height', 'width']
-  classNames: 'ember-table-add-column-button'
-  height: Ember.computed ->
-    # TODO(Louis): Why 1?
-    @get('controller._headerHeight') + 1
-  .property 'controller._headerHeight'
-  width: 26
-  click: -> @get('controller').addColumn()
-
 Ember.Table.ColumnSortableIndicator =
 Ember.View.extend Ember.StyleBindingsMixin,
   classNames: 'ember-table-column-sortable-indicator'
@@ -358,8 +344,7 @@ Ember.Table.HeaderTableContainer = Ember.Table.TableContainer.extend
 ###
 Ember.Table.BodyTableContainer =
 Ember.Table.TableContainer.extend Ember.MouseWheelHandlerMixin,
-Ember.TouchMoveHandlerMixin,
-Ember.ScrollHandlerMixin,
+Ember.TouchMoveHandlerMixin, Ember.ScrollHandlerMixin,
   templateName:   'body-container'
   classNames:     ['ember-table-table-container', 'ember-table-body-container',
                    'antiscroll-wrap']
@@ -367,7 +352,6 @@ Ember.ScrollHandlerMixin,
   width:          Ember.computed.alias 'controller._width'
   scrollTop:      Ember.computed.alias 'controller._tableScrollTop'
   scrollLeft:     Ember.computed.alias 'controller._tableScrollLeft'
-
   scrollElementSelector: '.antiscroll-inner'
   firefoxScrollDistance:  52
 
@@ -410,7 +394,7 @@ Ember.ScrollHandlerMixin,
   * @argument deltaY {Integer}
   ###
   onMouseWheel: (event, delta, deltaX, deltaY) ->
-    return if Math.abs(deltaX) > Math.abs(deltaY) is false
+    return unless Math.abs(deltaX) > Math.abs(deltaY)
     scrollLeft = @$('.ember-table-right-table-block').scrollLeft() + deltaX * 50
     @set 'scrollLeft', scrollLeft
     event.preventDefault()
@@ -424,7 +408,7 @@ Ember.ScrollHandlerMixin,
   * @argument deltaY {Integer}
   ###
   onTouchMove: (event, deltaX, deltaY) ->
-    return if (Math.abs(deltaX) > Math.abs(deltaY)) is false
+    return unless (Math.abs(deltaX) > Math.abs(deltaY))
     scrollLeft = @$('.ember-table-right-table-block').scrollLeft() + deltaX
     @set 'scrollLeft', scrollLeft
     event.preventDefault()

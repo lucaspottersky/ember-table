@@ -170,7 +170,7 @@ module.exports = function (grunt) {
                 files: ['src/**/*.coffee'],
                 tasks: [
                     'coffee',
-                    'jshint',
+                    // 'jshint',
                     'browserify2',
                     'uglify',
                     'qunit',
