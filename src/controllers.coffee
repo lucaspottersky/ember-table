@@ -107,7 +107,7 @@ Ember.Table.Row = Ember.ObjectProxy.extend
 * @class
 * @alias Ember.Table.RowArrayProxy
 ###
-Ember.Table.RowArrayProxy = Ember.ArrayController.extend
+Ember.Table.RowArrayController = Ember.ArrayController.extend
   itemController: null
   content: null
   rowContent: Ember.computed( -> []).property()

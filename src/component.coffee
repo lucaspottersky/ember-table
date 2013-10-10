@@ -104,7 +104,7 @@ Ember.Component.extend Ember.StyleBindingsMixin, Ember.ResizeHandler,
   * @instance
   ###
   bodyContent: Ember.computed ->
-    Ember.Table.RowArrayProxy.create
+    Ember.Table.RowArrayController.create
       target: this
       parentController: this
       container: @get('container')
