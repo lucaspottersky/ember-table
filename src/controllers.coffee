@@ -107,23 +107,20 @@ Ember.Table.Row = Ember.ObjectProxy.extend
 * @class
 * @alias Ember.Table.RowArrayProxy
 ###
-Ember.Table.RowArrayProxy = Ember.ArrayProxy.extend
-  tableRowClass: null
+Ember.Table.RowArrayProxy = Ember.ArrayController.extend
+  itemController: null
   content: null
   rowContent: Ember.computed( -> []).property()
 
-  ###*
-  * Get Object At Index
-  * @memberof Ember.Table.RowArrayProxy
-  * @instance
-  * @argument idx {Integer} Index of the object
-  ###
-  objectAt: (idx) ->
-    return unless 0 <= idx < @get('content.length')
-    row = @get('rowContent')[idx]
-    return row if row
-    tableRowClass = @get 'tableRowClass'
-    item  = @get('content').objectAt(idx)
-    row   = tableRowClass.create content: item, target: @get 'target'
-    @get('rowContent')[idx] = row
-    row
+  controllerAt: (idx, object, controllerClass) ->
+    container = @get 'container'
+    subControllers = @get '_subControllers'
+    subController = subControllers[idx]
+
+    return subController if subController
+    subController = @get('itemController').create
+      target: this
+      parentController: @get('parentController') or this
+      content: object
+    subControllers[idx] = subController;
+    return subController;
