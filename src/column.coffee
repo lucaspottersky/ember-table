@@ -38,11 +38,6 @@ Ember.Table.ColumnDefinition = Ember.Object.extend
   * @argument row {Ember.Table.Row}
   * @todo More detailed doc needed!
   ###
-  resize: (width) ->
-    @set 'columnWidth', width
-
-  # An imperative way to get the content. E.g. you need to do it in some obscure
-  # way and contentPath just wouldn't cut it
   getCellContent: (row) ->
     path = @get 'contentPath'
     Ember.assert "You must either provide a contentPath or override " +
@@ -71,14 +66,6 @@ Ember.Table.Row = Ember.ObjectProxy.extend
   content: null
 
   ###*
-  * Is Hovering?
-  * @memberof Ember.Table.Row
-  * @member {Boolean} isHovering
-  * @instance
-  ###
-  isHovering: no
-
-  ###*
   * Is Selected?
   * @memberof Ember.Table.Row
   * @member {Boolean} isSelected
@@ -102,25 +89,3 @@ Ember.Table.Row = Ember.ObjectProxy.extend
   ###
   isActive:   no
 
-###*
-* Table Row Array Proxy
-* @class
-* @alias Ember.Table.RowArrayProxy
-###
-Ember.Table.RowArrayController = Ember.ArrayController.extend
-  itemController: null
-  content: null
-  rowContent: Ember.computed( -> []).property()
-
-  controllerAt: (idx, object, controllerClass) ->
-    container = @get 'container'
-    subControllers = @get '_subControllers'
-    subController = subControllers[idx]
-
-    return subController if subController
-    subController = @get('itemController').create
-      target: this
-      parentController: @get('parentController') or this
-      content: object
-    subControllers[idx] = subController;
-    return subController;

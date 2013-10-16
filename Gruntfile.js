@@ -219,6 +219,6 @@ module.exports = function (grunt) {
         'browserify2',
         'uglify',
         // 'qunit',
-        'jsdoc'
+        // 'jsdoc'
     ]);
 };

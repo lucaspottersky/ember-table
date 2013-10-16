@@ -2,9 +2,10 @@
 * Table Container
 * @class
 * @alias Ember.Table.TableContainer
-* @mixes Ember.StyleBindingsMixin
+* @mixes Ember.AddeparMixins.StyleBindingsMixin
 ###
-Ember.Table.TableContainer = Ember.View.extend Ember.StyleBindingsMixin,
+Ember.Table.TableContainer =
+Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
   classNames:     ['ember-table-table-container']
   styleBindings:  ['height', 'width']
 
@@ -12,10 +13,11 @@ Ember.Table.TableContainer = Ember.View.extend Ember.StyleBindingsMixin,
 * Table Block
 * @class
 * @alias Ember.Table.TableBlock
-* @mixes Ember.StyleBindingsMixin
+* @mixes Ember.AddeparMixins.StyleBindingsMixin
 * @todo This should be a mixin
 ###
-Ember.Table.TableBlock = Ember.CollectionView.extend Ember.StyleBindingsMixin,
+Ember.Table.TableBlock =
+Ember.CollectionView.extend Ember.AddeparMixins.StyleBindingsMixin,
   classNames:     ['ember-table-table-block']
   styleBindings:  ['width', 'height']
   itemViewClass:  Ember.computed.alias 'controller.tableRowViewClass'
@@ -113,10 +115,11 @@ Ember.Table.TableRow = Ember.LazyItemView.extend
 * Table Cell
 * @class
 * @alias Ember.Table.TableCell
-* @mixes Ember.StyleBindingsMixin
+* @mixes Ember.AddeparMixins.StyleBindingsMixin
 ###
-Ember.Table.TableCell = Ember.View.extend Ember.StyleBindingsMixin,
-  templateName:       'table-cell'
+Ember.Table.TableCell =
+Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
+  defaultTemplate: Ember.Handlebars.compile('{{view.cellContent}}')
   classNames:         ['ember-table-cell']
   classNameBindings:  'column.textAlign'
   styleBindings:      'width'
@@ -188,9 +191,10 @@ Ember.Table.HeaderBlock = Ember.Table.TableBlock.extend
 * Header Row
 * @class
 * @alias Ember.Table.HeaderRow
-* @mixes Ember.StyleBindingsMixin
+* @mixes Ember.AddeparMixins.StyleBindingsMixin
 ###
-Ember.Table.HeaderRow = Ember.View.extend Ember.StyleBindingsMixin,
+Ember.Table.HeaderRow =
+Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
   templateName:   'header-row'
   classNames:     ['ember-table-table-row', 'ember-table-header-row']
   columns:        Ember.computed.alias 'content'
@@ -248,9 +252,10 @@ Ember.Table.HeaderRow = Ember.View.extend Ember.StyleBindingsMixin,
 * Header Cell
 * @class
 * @alias Ember.Table.HeaderCell
-* @mixes Ember.StyleBindingsMixin
+* @mixes Ember.AddeparMixins.StyleBindingsMixin
 ###
-Ember.Table.HeaderCell = Ember.View.extend Ember.StyleBindingsMixin,
+Ember.Table.HeaderCell =
+Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
   templateName:       'header-cell'
   classNames:         ['ember-table-cell', 'ember-table-header-cell']
   classNameBindings:  ['column.isSortable:sortable', 'column.textAlign']
@@ -295,9 +300,7 @@ Ember.Table.HeaderCell = Ember.View.extend Ember.StyleBindingsMixin,
   ###
   onColumnResize: (event, ui) ->
     @elementSizeDidChange()
-    @get("column").resize(ui.size.width)
-    # TODO(Louis): Have Peter look at this.. this doesn't seem to work?
-    # @$().resizable("option", "maxWidth", max) if max
+    @set 'columnWidth', ui.size.width
 
   elementSizeDidChange: ->
     maxHeight = 0
@@ -311,7 +314,7 @@ Ember.Table.HeaderCell = Ember.View.extend Ember.StyleBindingsMixin,
 ################################################################################
 
 Ember.Table.ColumnSortableIndicator =
-Ember.View.extend Ember.StyleBindingsMixin,
+Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
   classNames: 'ember-table-column-sortable-indicator'
   classNameBindings: 'controller._isShowingSortableIndicator:active'
   styleBindings: ['left', 'height']
@@ -465,13 +468,13 @@ Ember.TouchMoveHandlerMixin,
 * Scroll Container
 * @class
 * @alias Ember.Table.ScrollContainer
-* @mixes Ember.StyleBindingsMixin
+* @mixes Ember.AddeparMixins.StyleBindingsMixin
 * @mixes Ember.ScrollHandlerMixin
 ###
 Ember.Table.ScrollContainer =
-Ember.View.extend Ember.StyleBindingsMixin, Ember.ScrollHandlerMixin,
-  template: Ember.Handlebars.compile(
-    '<div class="antiscroll-wrap"><div class="antiscroll-inner">{{view Ember.Table.ScrollPanel}}</div></div>')
+Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
+Ember.ScrollHandlerMixin,
+  templateName: 'scroll-container'
   classNames:     ['ember-table-scroll-container']
   styleBindings:  ['left', 'width', 'height']
   scrollElementSelector: '.antiscroll-inner'
@@ -506,9 +509,9 @@ Ember.View.extend Ember.StyleBindingsMixin, Ember.ScrollHandlerMixin,
 * ScrollPanel
 * @class
 * @alias Ember.Table.ScrollPanel
-* @mixes Ember.StyleBindingsMixin
+* @mixes Ember.AddeparMixins.StyleBindingsMixin
 ###
-Ember.Table.ScrollPanel = Ember.View.extend Ember.StyleBindingsMixin,
+Ember.Table.ScrollPanel = Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
   classNames:     ['ember-table-scroll-panel']
   styleBindings:  ['width', 'height']
   width:   Ember.computed.alias 'controller._tableColumnsWidth'

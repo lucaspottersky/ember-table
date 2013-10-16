@@ -48,7 +48,6 @@ App.ApplicationController = Ember.Controller.extend
       tableCellViewClass: 'App.TableHorizonExample.HorizonTableCellView'
       getCellContent: Ember.K
     [name, horizon]
-  .property()
 
   content: Ember.computed ->
     normal = d3.random.normal(1.5, 3)

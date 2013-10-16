@@ -76,7 +76,6 @@ App.ApplicationController = Ember.Controller.extend
       headerCellName: 'High'
       getCellContent: (row) -> row['high'].toFixed(2)
     [name, open, spark, close, low, high]
-  .property()
 
   content: Ember.computed ->
     [0...@get('numRows')].map (num, index) ->

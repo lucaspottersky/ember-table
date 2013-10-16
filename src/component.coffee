@@ -4,7 +4,8 @@
 * @alias Ember.Table.EmberTableComponent
 ###
 Ember.Table.EmberTableComponent =
-Ember.Component.extend Ember.StyleBindingsMixin, Ember.ResizeHandler,
+Ember.Component.extend Ember.AddeparMixins.StyleBindingsMixin,
+Ember.AddeparMixins.ResizeHandlerMixin,
   templateName:   'components/ember-table'
   classNames:     ['ember-table-tables-container']
   styleBindings:  ['height']
@@ -12,38 +13,101 @@ Ember.Component.extend Ember.StyleBindingsMixin, Ember.ResizeHandler,
 
   # Array of Ember.Table.ColumnDefinition
   columns: null
+
   # The number of frozen column on the left table
   numFixedColumns: 0
+
   # The number of footer rows
   numFooterRow: 0
+
   # The height per row. We need to know this for the lazy rendering.
   # TODO: The following three variables should be shared with LESS file
   rowHeight: 30
+
   minHeaderHeight: 30
+
   footerHeight: 30
+
   hasHeader: yes
+
   hasFooter: yes
+
   forceFillColumns: no
+
   enableColumnReorder: yes
 
   # specify the view class to use for rendering the table rows
-  # TODO(Peter): This probably should go in the view...
   tableRowViewClass: 'Ember.Table.TableRow'
-
-  prepareTableColumns: Ember.K
 
   actions:
     addColumn: Ember.K
     sortByColumn: Ember.K
 
+  onColumnSort: (column, newIndex) ->
+    columns  = @get 'tableColumns'
+    columns.removeObject column
+    columns.insertAt newIndex, column
+
+  ###*
+  * Table Body Content - Array of Ember.Table.Row
+  * @memberof Ember.Table.EmberTableComponent
+  * @instance
+  ###
+  bodyContent: Ember.computed ->
+    Ember.Table.RowArrayController.create
+      target: this
+      parentController: this
+      container: @get('container')
+      itemController: Ember.Table.Row
+      content: @get('content')
+  .property 'content'
+
+  ###*
+  * Table Footer Content - Array of Ember.Table.Row
+  * @memberof Ember.Table.EmberTableComponent
+  * @instance
+  ###
+  footerContent: Ember.computed (key, value) ->
+    if value then value else Ember.A()
+  .property()
+
+  ###*
+  * Table Fixed Columns
+  * @memberof Ember.Table.EmberTableComponent
+  * @instance
+  * @todo Much more doc needed
+  ###
+  fixedColumns: Ember.computed ->
+    columns         = @get 'columns'
+    return Ember.A() unless columns
+    numFixedColumns = @get('numFixedColumns') or 0
+    columns = columns.slice(0, numFixedColumns) or []
+    columns.setEach 'controller', this
+    columns
+  .property 'columns.@each', 'numFixedColumns'
+
+  ###*
+  * Table Columns
+  * @memberof Ember.Table.EmberTableComponent
+  * @instance
+  * @todo Much more doc needed
+  ###
+  tableColumns: Ember.computed ->
+    columns         = @get 'columns'
+    return Ember.A() unless columns
+    numFixedColumns = @get('numFixedColumns') or 0
+    columns = columns.slice(numFixedColumns, columns.get('length')) or []
+    columns.setEach 'controller', this
+    columns
+  .property 'columns.@each', 'numFixedColumns'
+
+  ##############################################################################
+  # View concerns
+  ##############################################################################
   didInsertElement: ->
     @_super()
     @set '_tableScrollTop', 0
     @elementSizeDidChange()
-
-  onBodyContentLengthDidChange: Ember.observer ->
-    Ember.run.next this, -> Ember.run.once this, @updateLayout
-  , 'bodyContent.length'
 
   ###*
   * On resize end callback
@@ -93,61 +157,9 @@ Ember.Component.extend Ember.StyleBindingsMixin, Ember.ResizeHandler,
           columnWidth = column.get('defaultColumnWidth') + additionWidthPerColumn
           column.set 'columnWidth', columnWidth
 
-  onColumnSort: (column, newIndex) ->
-    columns  = @get 'tableColumns'
-    columns.removeObject column
-    columns.insertAt newIndex, column
-
-  ###*
-  * Table Body Content - Array of Ember.Table.Row
-  * @memberof Ember.Table.EmberTableComponent
-  * @instance
-  ###
-  bodyContent: Ember.computed ->
-    Ember.Table.RowArrayController.create
-      target: this
-      parentController: this
-      container: @get('container')
-      itemController: Ember.Table.Row
-      content: @get('content')
-  .property 'content'
-
-  ###*
-  * Table Footer Content - Array of Ember.Table.Row
-  * @memberof Ember.Table.EmberTableComponent
-  * @instance
-  ###
-  footerContent: Ember.computed (key, value) ->
-    if value then value else Ember.A()
-  .property()
-
-  ###*
-  * Table Fixed Columns
-  * @memberof Ember.Table.EmberTableComponent
-  * @instance
-  * @todo Much more doc needed
-  ###
-  fixedColumns: Ember.computed ->
-    columns         = @get 'columns'
-    return Ember.A() unless columns
-    numFixedColumns = @get('numFixedColumns') or 0
-    columns.slice(0, numFixedColumns)
-  .property 'columns.@each', 'numFixedColumns'
-
-  ###*
-  * Table Columns
-  * @memberof Ember.Table.EmberTableComponent
-  * @instance
-  * @todo Much more doc needed
-  ###
-  tableColumns: Ember.computed ->
-    columns         = @get 'columns'
-    return Ember.A() unless columns
-    numFixedColumns = @get('numFixedColumns') or 0
-    columns = columns.slice(numFixedColumns, columns.get('length'))
-    @prepareTableColumns(columns)
-    columns
-  .property 'columns.@each', 'numFixedColumns'
+  onBodyContentLengthDidChange: Ember.observer ->
+    Ember.run.next this, -> Ember.run.once this, @updateLayout
+  , 'bodyContent.length'
 
   ##############################################################################
   # private variables

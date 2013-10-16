@@ -76,7 +76,6 @@ App.ApplicationController = Ember.Controller.extend
     columns.unshift(ratingColumn)
     columns.unshift(dateColumn)
     columns
-  .property()
 
   content: Ember.computed ->
     [0...@get('numRows')].map (num, idx) ->
