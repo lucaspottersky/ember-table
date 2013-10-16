@@ -325,3 +325,5 @@ Ember.Component.extend Ember.StyleBindingsMixin, Ember.ResizeHandler,
     return 0 unless columns
     widths = columns.getEach(columnWidthPath) or []
     widths.reduce ((total, w) -> total + w), 0
+
+Ember.Handlebars.helper('addepar-table', Ember.Table.EmberTableComponent)
