@@ -1,30 +1,7 @@
+//
+// Mixins
+// -----------------------------------------------------------------------------
 
-/* Mixins */
-
-.font-weight-ultra-light(){
-  font-weight: normal !important;
-  font-family: @ultraLightFontFamily;
-}
-.font-weight-thin(){
-  font-weight: normal !important;
-  font-family: @thinFontFamily;
-}
-.font-weight-light(){
-  font-weight: normal !important;
-  font-family: @lightFontFamily;
-}
-.font-weight-regular(){
-  font-weight: normal !important;
-  font-family: @regularFontFamily;
-}
-.font-weight-medium(){
-  font-weight: normal !important;
-  font-family: @mediumFontFamily;
-}
-.font-weight-bold(){
-  font-weight: normal !important;
-  font-family: @boldFontFamily;
-}
 .text-shadow (@string: 0 1px 3px rgba(0, 0, 0, 0.25)) {
   -webkit-text-shadow: @string;
   -moz-text-shadow: @string;
@@ -78,6 +55,12 @@
   -moz-background-clip:    padding;
   -webkit-background-clip: padding-box;
   background-clip:         padding-box;
+}
+.background-size (@value: cover) {
+  -webkit-background-size: @value;
+  -moz-background-size: @value;
+  -o-background-size: @value;
+  background-size: @value;
 }
 .opacity (@opacity: 50) {
   -webkit-opacity: @opacity/100;
