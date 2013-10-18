@@ -2,7 +2,7 @@ node_modules/
 gh_pages/
 build/
 dist/
-dependencies/compiled/*.*
+dependencies/
 .DS_Store
 *.swo
 *.swp
