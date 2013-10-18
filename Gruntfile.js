@@ -1,9 +1,6 @@
 module.exports = function (grunt) {
   'use strict';
 
-  // env could be 'dev' or 'prod'
-  var env = grunt.option('env') || 'dev';
-
   var path = require('path');
 
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -155,6 +152,23 @@ module.exports = function (grunt) {
             dest: 'gh_pages/img'
           }
         ]
+      },
+      tests: {
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            cwd: 'dependencies/',
+            src: ['**/*.js'],
+            dest: 'tests/lib'
+          }, {
+            expand: true,
+            flatten: true,
+            cwd: 'dependencies/',
+            src: ['**/*.css'],
+            dest: 'tests/css'
+          }
+        ]
       }
     },
 
@@ -163,24 +177,7 @@ module.exports = function (grunt) {
     },
 
     uglify: {
-      development: {
-        options: {
-          banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-          preserveComments: true,
-          beautify: true,
-          mangle: false,
-          report: 'min'
-        },
-
-        files: {
-          './dist/ember-table-dev.js': [
-            // Include dist in bundle
-            './dist/ember-table.js'
-          ]
-        }
-      },
-
-      production: {
+      file: {
         options: {
           banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
           preserveComments: false,
@@ -227,10 +224,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask("build_app", ["coffee:app", "emberTemplates", "neuter"]);
 
-  if (env === "dev") {
-    grunt.registerTask("default", ["build_srcs", "build_app", "less", "copy", "uglify", "watch"]);
-  } else {
-    grunt.registerTask("default", ["less", "build_srcs", "uglify"]);
-  }
+  grunt.registerTask("default", ["build_srcs", "build_app", "less", "copy", "uglify", "watch"]);
 
 };
