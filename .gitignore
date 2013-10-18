@@ -2,10 +2,8 @@ node_modules/
 gh_pages/
 build/
 dist/
-dependencies/
 .DS_Store
 *.swo
 *.swp
 .DS_Store
 doc/
-examples/*/*.js
