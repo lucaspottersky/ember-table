@@ -71,9 +71,9 @@ module.exports = function (grunt) {
     },
 
     clean: [
-      "./dist/*",
-      "./build/src/ember-table-templates.js",
-      "./stylesheets/ember-table.css"
+      "./dist",
+      "./build",
+      "./gh_pages"
     ],
 
     emberTemplates: {
@@ -122,7 +122,7 @@ module.exports = function (grunt) {
           yuicompress: true
         },
         files: {
-          "./dist/ember-table.css": ["./stylesheets/ember-table.less"],
+          "./dist/ember-table.css": ["./src/css/ember-table.less"],
           "./gh_pages/css/app.css": ["./app/assets/css/app.less"]
         }
       }
