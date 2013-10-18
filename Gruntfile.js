@@ -4,10 +4,7 @@ module.exports = function (grunt) {
   // env could be 'dev' or 'prod'
   var env = grunt.option('env') || 'dev';
 
-
   var path = require('path');
-
-  var templatesDir = "./src/templates/";
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-coffee');
@@ -79,15 +76,12 @@ module.exports = function (grunt) {
     emberTemplates: {
       compile: {
         options: {
-          templateName: function (filename) {
-            return filename.replace(templatesDir, '');
+          templateName: function(sourceFile) {
+            return sourceFile.replace(/src\/templates\//, '').replace(/docs\/templates\//, '');
           }
         },
-        files: {
-          "./build/src/ember-table-templates.js": [
-            templatesDir + "**/*.hbs"
-          ]
-        }
+        'build/src/ember-table-templates.js': ["src/templates/**/*.hbs"],
+        'build/docs/templates.js': ["docs/templates/**/*.hbs"]
       }
     },
 
@@ -153,6 +147,11 @@ module.exports = function (grunt) {
             dest: 'gh_pages/font'
           }, {
             expand: true,
+            cwd: 'app/assets/font/',
+            src: ['**'],
+            dest: 'gh_pages/font'
+          }, {
+            expand: true,
             cwd: 'app/assets/img/',
             src: ['**'],
             dest: 'gh_pages/img'
@@ -176,9 +175,9 @@ module.exports = function (grunt) {
         },
 
         files: {
-          './lib/ember-table.js': [
-            // Include lib in bundle
-            './lib/ember-table-lib.js'
+          './dist/ember-table.js': [
+            // Include dist in bundle
+            './dist/ember-table-lib.js'
           ]
         }
       },
@@ -193,9 +192,9 @@ module.exports = function (grunt) {
         },
 
         files: {
-          './lib/ember-table.min.js': [
-            // Include lib in bundle
-            './lib/ember-table-lib.js'
+          './dist/ember-table.min.js': [
+            // Include dist in bundle
+            './dist/ember-table-lib.js'
           ]
         }
       }
