@@ -28,24 +28,15 @@ module.exports = function (grunt) {
         '<%=grunt.template.today("dddd, mmmm dS, yyyy, h:MM:ss TT")%> */'
     },
 
-    browserify2: {
-      // Bundle containing all client scripts (WebApp, Ember.js)
-      table: {
-        entry: [
-          './build/src/main.js'
-        ],
-        compile: './lib/ember-table-lib.js'
-      }
-    },
-
-    neuter: {
-      options:{
-        includeSourceURL: false,
-        separator: "\n"
-      },
-      "gh_pages/app.js": "build/app/app.js",
-      "dist/ember-table.js": "build/src/main.js"
-    },
+    // browserify2: {
+    //   // Bundle containing all client scripts (WebApp, Ember.js)
+    //   table: {
+    //     entry: [
+    //       './build/src/main.js'
+    //     ],
+    //     compile: './lib/ember-table-lib.js'
+    //   }
+    // },
 
     coffee: {
       srcs: {
@@ -58,13 +49,32 @@ module.exports = function (grunt) {
         dest: "build/src/",
         ext: ".js"
       },
-      examples: {
+      app: {
         expand: true,
-        cwd: "examples/",
+        cwd: "app/",
         src: [ "**/*.coffee" ],
-        dest: "examples/",
+        dest: "build/app/",
         ext: ".js"
       }
+    },
+
+    emberTemplates: {
+      options: {
+        templateName: function(sourceFile) {
+          return sourceFile.replace(/src\/templates\//, '').replace(/app\/templates\//, '');
+        }
+      },
+      'build/src/templates.js': ["src/templates/**/*.hbs"],
+      'build/app/templates.js': ["app/templates/**/*.hbs"]
+    },
+
+    neuter: {
+      options:{
+        includeSourceURL: false,
+        separator: "\n"
+      },
+      "dist/ember-table.js":  "build/src/main.js",
+      "gh_pages/app.js":      "build/app/app.js"
     },
 
     clean: [
@@ -72,18 +82,6 @@ module.exports = function (grunt) {
       "./build",
       "./gh_pages"
     ],
-
-    emberTemplates: {
-      compile: {
-        options: {
-          templateName: function(sourceFile) {
-            return sourceFile.replace(/src\/templates\//, '').replace(/docs\/templates\//, '');
-          }
-        },
-        'build/src/ember-table-templates.js': ["src/templates/**/*.hbs"],
-        'build/docs/templates.js': ["docs/templates/**/*.hbs"]
-      }
-    },
 
     jsdoc: {
       all: {
@@ -175,9 +173,9 @@ module.exports = function (grunt) {
         },
 
         files: {
-          './dist/ember-table.js': [
+          './dist/ember-table-dev.js': [
             // Include dist in bundle
-            './dist/ember-table-lib.js'
+            './dist/ember-table.js'
           ]
         }
       },
@@ -194,7 +192,7 @@ module.exports = function (grunt) {
         files: {
           './dist/ember-table.min.js': [
             // Include dist in bundle
-            './dist/ember-table-lib.js'
+            './dist/ember-table.js'
           ]
         }
       }
@@ -225,12 +223,14 @@ module.exports = function (grunt) {
   });
 
   // Default tasks.
-  grunt.registerTask("build_docs", ["coffee", "emberTemplates", "neuter", "less"]);
+  grunt.registerTask("build_srcs", ["coffee:srcs", "emberTemplates", "neuter"]);
+
+  grunt.registerTask("build_app", ["coffee:app", "emberTemplates", "neuter"]);
 
   if (env === "dev") {
-    grunt.registerTask("default", ["build_docs", "copy", "watch"]);
+    grunt.registerTask("default", ["build_srcs", "build_app", "less", "copy", "uglify", "watch"]);
   } else {
-    grunt.registerTask("default", []);
+    grunt.registerTask("default", ["less", "build_srcs", "uglify"]);
   }
 
 };

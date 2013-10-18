@@ -1,4 +1,4 @@
-require 'build/src/ember-table-templates'
+require 'build/src/templates'
 
 ## Used for bundling files together using neuter
 Ember.Table = Ember.Namespace.create()
