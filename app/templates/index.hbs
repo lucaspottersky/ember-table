@@ -1,26 +1,127 @@
-<h1>Addepar Ember Table Examples, Documentation & Tests</h1>
+{{!-- Content Column --}}
+<div class="col-md-10 col-md-offset-2 left-border main-content-container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Ember Table <small>Ember.Table</small></h1>
+      <p class="elevated">A fast, lazy rendered, easily extensible table built with <a target="_BLANK" href="http://emberjs.com/">Ember.js</a>.</p>
 
-<h2>Examples</h2>
-<ul>
-  <li><a href="./table_ajax">Table Ajax</a></li>
-  <li><a href="./table_editable">Table Editable</a></li>
-  <li><a href="./table_fluid">Table Fluid</a></li>
-  <li><a href="./table_simple">Table Simple</a></li>
-  <li><a href="./table_with_bar">Table With Bar</a></li>
-  <li><a href="./table_with_dynamic_bar">Table With Dynamic Bar</a></li>
-  <li><a href="./table_with_header">Table With Header</a></li>
-  <li><a href="./table_with_horizon">Table With Horizon</a></li>
-  <li><a href="./table_with_sparkline">Table With Sparkline</a></li>
-  <li><a href="./table_with_tree_view">Table With Tree View</a></li>
-  <li><a href="./table_with_financial_view">Table With Financial View</a></li>
-</ul>
+      <div class="example-container">
+        <div class="ember-table-example-container ember-table-financial">
+          {{!view App.FinancialTableExample.TableComponent dataBinding="data"}}
+        </div>
+      </div>
+      <div class="example-description">
+        <p class="reduced">Ember-Table with financial theme. Table with half a million rows. <a href="#">See how ember-table was extended -></a></p>
+      </div>
+    </div>
+  </div>
 
-<h2>Documentation</h2>
-<ul>
-  <li><a href="./../doc/index.html">API Documentation</a></li>
-</ul>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Features</h3>
+      <ul>
+        <li>Lazy rendering</li>
+        <li>Configurable & customizable</li>
+        <li>Full keyboard navigation</li>
+        <li>Column resize/reorder/show/hide</li>
+        <li>Grouping, filtering, custom aggregators</li>
+        <li>Support for millions of rows</li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h3>Dependencies</h3>
+      <ul>
+        <li><a target="_BLANK" href="http://emberjs.com/">Ember.js</a></li>
+        <li><a target="_BLANK" href="http://jqueryui.com/">jquery-ui</a></li>
+        <li><a target="_BLANK" href="https://github.com/brandonaaron/jquery-mousewheel">jquery.mousewheel.js</a></li>
+        <li><a target="_BLANK" href="https://github.com/LearnBoost/antiscroll">antiscroll.js</a></li>
+      </ul>
+    </div>
+  </div>
 
-<h2>Tests</h2>
-<ul>
-  <li><a href="./../tests/index.html">QUnit Tests</a></li>
-</ul>
+  <div class="row">
+    <div class="col-md-12">
+      <hr>
+      <h1>Examples</h1>
+      <p class="elevated">The examples below demonstrate how you can extend and customize the table.</p>
+      <div class="row ember-table-examples">
+        <div class="col-md-4">
+          <h4>Hello World Ember Table</h4>
+          <img class="preview-box" src="/gh_pages/img/preview_table_simple.png" />
+        </div>
+        <div class="col-md-4">
+          <h4>Tree & Financial Table</h4>
+          <img class="preview-box" src="/gh_pages/img/preview_table_financial.png" />
+        </div>
+        <div class="col-md-4">
+          <h4>Editable Table Cell</h4>
+          <img class="preview-box" src="/gh_pages/img/preview_table_editable.png" />
+        </div>
+        <div class="col-md-4">
+          <h4>Table Cells with D3.js</h4>
+          <img class="preview-box" src="/gh_pages/img/preview_table_bars.png" />
+        </div>
+        <div class="col-md-4">
+          <h4>Table with AJAX cells</h4>
+          <img class="preview-box" src="/gh_pages/img/preview_table_ajax.png" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <hr>
+      <h1>Getting Started</h1>
+      <p>You will need <a target="_BLANK" href="http://nodejs.org/">node</a> installed as a development dependency.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <a class="btn" href="#">Download Ember-Table.js</a>
+      <a class="btn" href="#">Download Ember-Table with examples (Javascript)</a>
+      <a class="btn" href="#">Download Ember-Table with examples (Coffeescript)</a>
+    </div>
+    <div class="col-md-6">
+      <div class="highlight">
+<pre><code>$ npm install -g grunt-cli
+$ npm install
+$ grunt
+$ node examples.js</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <hr>
+      <h1>Contributing</h1>
+      <p>You can contribute to this project in one of two ways:
+      <ul>
+        <li>Browse the ember-table <a target="_BLANK" href="https://github.com/Addepar/ember-table/issues?state=open">issues</a> and report bugs</li>
+        <li>Clone the ember-table repo, make some changes according to our development guidelines and issue a pull-request with your changes.</li>
+      </ul>
+      <p>We keep the ember-table.js code to the minimum necessary, giving users as much control as possible.</p>
+    </div>
+    <div class="col-md-6">
+      <hr>
+      <h1>Acknowledgements</h1>
+      <p><a target="_BLANK" href="https://github.com/Addepar/ember-table/graphs/contributors">List of Contributors on Github</a></p>
+      <p>With lots of help from the Ember.js team</p>
+      <p><a target="_BLANK" href="https://twitter.com/ebryn">ebryn</a>, <a target="_BLANK" href="https://twitter.com/tomdale">tomdale</a>, <a target="_BLANK" href="https://twitter.com/wycats">wycats</a></p>
+      <p>The original idea for lazy rendering was inspired by Erik Bryn.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <hr>
+      <h1>Changelog</h1>
+      <ul>
+        <li>v0.2 - October 21, 2013. Branch: <a target="_BLANK" href="https://github.com/Addepar/ember-table/tree/master">master →</a></li>
+        <li>v0.1 - December 20, 2012. Branch: <a target="_BLANK" href="https://github.com/Addepar/ember-table/tree/version-0.1">version-0.1 →</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

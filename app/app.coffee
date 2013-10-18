@@ -17,7 +17,7 @@ require 'build/app/data/treedata'
 # require 'build/app/controllers/'
 
 # Views
-# None yet
+require 'build/app/views/index'
 
 # Router
 require 'build/app/router'
