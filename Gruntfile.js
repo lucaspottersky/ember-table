@@ -1,6 +1,10 @@
 module.exports = function (grunt) {
   'use strict';
 
+  // env could be 'dev' or 'prod'
+  var env = grunt.option('env') || 'dev';
+
+
   var path = require('path');
 
   var templatesDir = "./src/templates/";
@@ -9,6 +13,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -41,7 +46,8 @@ module.exports = function (grunt) {
         includeSourceURL: false,
         separator: "\n"
       },
-      "lib/ember-table.js": "build/src/main.js"
+      "gh_pages/app.js": "build/app/app.js",
+      "dist/ember-table.js": "build/src/main.js"
     },
 
     coffee: {
@@ -116,10 +122,42 @@ module.exports = function (grunt) {
           yuicompress: true
         },
         files: {
-          "./stylesheets/ember-table.css": [
-            "./stylesheets/ember-table.less"
-          ]
+          "./dist/ember-table.css": ["./stylesheets/ember-table.less"],
+          "./gh_pages/css/app.css": ["./app/assets/css/app.less"]
         }
+      }
+    },
+
+    copy: {
+      gh_pages: {
+        files: [
+          {
+            src: ['app/index.html'],
+            dest: 'gh_pages/index.html'
+          }, {
+            expand: true,
+            flatten: true,
+            cwd: 'dependencies/',
+            src: ['**/*.js'],
+            dest: 'gh_pages/lib'
+          }, {
+            expand: true,
+            flatten: true,
+            cwd: 'dependencies/',
+            src: ['**/*.css'],
+            dest: 'gh_pages/css'
+          }, {
+            expand: true,
+            cwd: 'dependencies/font-awesome/font/',
+            src: ['**'],
+            dest: 'gh_pages/font'
+          }, {
+            expand: true,
+            cwd: 'app/assets/img/',
+            src: ['**'],
+            dest: 'gh_pages/img'
+          }
+        ]
       }
     },
 
@@ -164,59 +202,36 @@ module.exports = function (grunt) {
     },
 
     watch: {
-      scripts: {
-        files: ['src/**/*.coffee'],
-        tasks: [
-          'coffee',
-          // 'jshint',
-          'browserify2',
-          'uglify',
-          'qunit',
-          'jsdoc'
-        ],
-
-        options: {
-          spawn: false
-        }
+      grunt: {
+        files: ["Gruntfile.coffee"],
+        tasks: ["default"]
       },
-
+      code: {
+        files: ["src/**/*.coffee", "app/**/*.coffee", "dependencies/**/*.js"],
+        tasks: ["coffee", "neuter"]
+      },
+      handlebars: {
+        files: ["src/**/*.hbs", "app/**/*.hbs"],
+        tasks: ["emberTemplates", "neuter"]
+      },
       less: {
-        files: ['stylesheets/**/*.less'],
-        tasks: [
-          'less'
-        ],
-
-        options: {
-          spawn: false
-        }
+        files: ["app/assets/**/*.less", "app/assets/**/*.css", "src/**/*.less"],
+        tasks: ["less", "copy"]
       },
-
-      templates: {
-        files: ['src/**/*.hbs'],
-        tasks: [
-          'emberTemplates',
-          'browserify2',
-          'uglify',
-          'qunit'
-        ],
-
-        options: {
-          spawn: false
-        }
+      copy: {
+        files: ["app/index.html"],
+        tasks: ["copy"]
       }
     }
   });
 
   // Default tasks.
-  grunt.registerTask('default', [
-    'clean',
-    'less',
-    'coffee',
-    'emberTemplates',
-    // 'jshint',
-    'browserify2',
-    'uglify',
-    // 'qunit',
-    // 'jsdoc'
-  ]);
+  grunt.registerTask("build_docs", ["coffee", "emberTemplates", "neuter", "less"]);
+
+  if (env === "dev") {
+    grunt.registerTask("default", ["build_docs", "copy", "watch"]);
+  } else {
+    grunt.registerTask("default", []);
+  }
+
 };
