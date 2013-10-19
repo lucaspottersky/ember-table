@@ -1,0 +1,53 @@
+{{!-- Content Column --}}
+<div class="col-md-10 col-md-offset-2 left-border main-content-container">
+  <h1>Ember Table <small>D3 Chart Table Cells</small></h1>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="example-container">
+        <div class="ember-table-example-container">
+          {{addepar-table
+            hasHeader=true
+            hasFooter=false
+            rowHeight=30
+            columnsBinding="columns"
+            contentBinding="content"
+          }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Charts.hbs</h3>
+      <div class="highlight">
+<pre class="prettyprint lang-html">&lt;span class="bar-cell" &gt;&#123;&#123;bindAttr style="view.histogramStyle"&gt;&#125;&#125;&gt;&lt;/span&gt;</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Bar.coffee</h3>
+      <div class="highlight">
+<pre class="prettyprint lang-coffee">
+App.TableBarExample = Ember.Namespace.create()
+
+App.TableBarExample.BarCell = Ember.Table.TableCell.extend
+  templateName:     'ember_table/bar'
+  classNameBindings:['column.color']
+  barWidth: Ember.computed ->
+    {column, row} = @getProperties 'column', 'row'
+    return 0 unless column and row
+    Math.round(+column.getCellContent(row.get('content')))
+  .property 'column', 'row'
+
+  histogramStyle: Ember.computed ->
+    "width: #{@get('barWidth')}%;"
+  .property 'barWidth'
+</pre>
+      </div>
+    </div>
+  </div>
+</div>
