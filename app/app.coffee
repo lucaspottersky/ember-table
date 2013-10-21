@@ -1,6 +1,7 @@
 # Dependencies
 require 'dependencies/bootstrap/js/bootstrap'
 require 'dependencies/antiscroll/antiscroll'
+require 'dependencies/date'
 require 'dependencies/ember-addepar-mixins/resize_handler'
 require 'dependencies/ember-addepar-mixins/style_bindings'
 require 'dist/ember-table'
