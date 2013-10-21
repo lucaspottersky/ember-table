@@ -411,7 +411,6 @@ if (!jQuery.browser) {
 })();
 (function() {
 
-
 Ember.LazyContainerView = Ember.ContainerView.extend(Ember.AddeparMixins.StyleBindingsMixin, {
   classNames: 'lazy-list-container',
   styleBindings: ['height'],
@@ -655,6 +654,9 @@ Ember.Table.ColumnDefinition = Ember.Object.extend({
   canAutoResize: true,
   headerCellViewClass: 'Ember.Table.HeaderCell',
   tableCellViewClass: 'Ember.Table.TableCell',
+  resize: function(width) {
+    return this.set('columnWidth', width);
+  },
   /**
   * Get Cell Content - This gives a formatted value e.g. $20,000,000
   * @memberof Ember.Table.ColumnDefinition
@@ -1062,7 +1064,7 @@ Ember.Table.HeaderCell = Ember.View.extend(Ember.AddeparMixins.StyleBindingsMixi
 
   onColumnResize: function(event, ui) {
     this.elementSizeDidChange();
-    return this.set('columnWidth', ui.size.width);
+    return this.get("column").resize(ui.size.width);
   },
   elementSizeDidChange: function() {
     var maxHeight;
