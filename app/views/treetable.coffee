@@ -60,11 +60,11 @@ App.TreeTableExample.TreeTableRow = Ember.Table.Row.extend
         return Math.min(level, 4)
 
 App.TreeTableExample.TreeCell = Ember.Table.TableCell.extend
-  templateName: 'tree_table/table_tree_cell'
+  templateName: 'ember_table/tree_table/table_tree_cell'
   classNames:   'ember-table-table-tree-cell'
   styleBindings: ['indentation:padding-left']
   indentation:  Ember.computed.alias 'row.indentation'
 
 App.TreeTableExample.HeaderTreeCell = Ember.Table.HeaderCell.extend
-  templateName: 'tree_table/table_header_tree_cell'
+  templateName: 'ember_table/tree_table/table_header_tree_cell'
   classNames:   'ember-table-table-header-tree-cell'

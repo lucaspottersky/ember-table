@@ -19,30 +19,7 @@
   </div><!-- /.navbar-collapse -->
 </nav>
 
-{{!-- Index Hero --}}
-<div class="hero-container small-hero-container">
-  <div class="hero table-hero">
-    <div class="hero-overlay"></div>
-  </div>
-  {{!-- <div class="container hero-content-container">
-    <div class="row">
-      <div class="span12 hero-tagline center-align hidden-tablet">
-        <h1 class="elevated">Ember Charts</h1>
-        <p class="elevated">The sexiest charts you have ever seen.<br><br><a href="#" class="addepar-btn addepar-btn-large addepar-btn-outline addepar-btn-white">Download Ember-charts.js</a></p>
-      </div>
-    </div>
-  </div> --}}
-</div>
-
-{{!-- Main Container --}}
-<div class="container">
-  <div class="row">
-
-    {{partial "sub_navigation"}}
-
-    {{outlet}}
-  </div>
-</div>
+{{outlet}}
 
 {{!-- Footer --}}
 <div class="footer">
@@ -51,17 +28,17 @@
       <div class="col-md-3 col-md-offset-6">
         <ul class="list-unstyled">
           <li><h6>Ember table</h6></li>
-          <li>{{#linkTo 'index'}}Overview &amp; Getting Started{{/linkTo}}</li>
-          <li>{{#linkTo 'documentation'}}API &amp; Documentation{{/linkTo}}</li>
+          <li>{{#linkTo 'emberTable.overview'}}Overview &amp; Getting Started{{/linkTo}}</li>
+          <li>{{#linkTo 'emberTable.documentation'}}API &amp; Documentation{{/linkTo}}</li>
 
           <li class="sub-title">Examples</li>
-          <li>{{#linkTo 'index'}}Time Series{{/linkTo}}</li>
+          <li>{{#linkTo 'emberTable.overview'}}Time Series{{/linkTo}}</li>
         </ul>
       </div>
       <div class="col-md-3">
         <ul class="list-unstyled">
           <li><h6>Open Source</h6></li>
-          <li>{{#linkTo 'index'}}Home{{/linkTo}}</li>
+          <li>{{#linkTo 'emberTable.overview'}}Home{{/linkTo}}</li>
           <li>{{#linkTo 'license'}}License{{/linkTo}}</li>
           <li>
             <address>

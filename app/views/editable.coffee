@@ -1,7 +1,7 @@
 App.TableEditableExample = Ember.Namespace.create()
 App.TableEditableExample.EditableTableCell = Ember.Table.TableCell.extend
   className: 'editable-table-cell'
-  templateName: 'editable_table/editable_table_cell'
+  templateName: 'ember_table/editable_table/editable_table_cell'
   isEditing:  no
   type:       'text'
 

@@ -9,7 +9,7 @@ window.App = Ember.Application.create
   LOG_TRANSITIONS: true
 
 # Data
-require 'build/app/data/treedata'
+require 'build/app/data/data'
 
 # Components
 # require 'build/app/components/resizable_panel'

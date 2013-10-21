@@ -13,7 +13,6 @@ Number.prototype.toPercent = ->
 
 App.FinancialTableExample = Ember.Namespace.create()
 
-
 # Ember-Table: Data transformation
 
 # Convert tree data into columns, bodyContent and footerContent for the table

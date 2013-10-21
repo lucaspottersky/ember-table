@@ -1,7 +1,7 @@
 App.TableBarExample = Ember.Namespace.create()
 
 App.TableBarExample.BarCell = Ember.Table.TableCell.extend
-  templateName:     'chart_table/bar'
+  templateName:     'ember_table/chart_table/bar'
   classNameBindings:['column.color']
   barWidth: Ember.computed ->
     {column, row} = @getProperties 'column', 'row'

@@ -63,18 +63,18 @@ App.FinancialTableExample.TreeTableRow = Ember.Table.Row.extend
 # Views
 ################################################################################
 App.FinancialTableExample.TableCell = Ember.Table.TableCell.extend
-  templateName: 'financial_table/table_cell_container'
+  templateName: 'ember_table/financial_table/table_cell_container'
 
 App.FinancialTableExample.HeaderCell = Ember.Table.HeaderCell.extend
-  templateName: 'financial_table/table_tree_header_cell'
+  templateName: 'ember_table/financial_table/table_tree_header_cell'
 
 App.FinancialTableExample.TreeCell = Ember.Table.TableCell.extend
-  templateName: 'financial_table/table_tree_cell'
+  templateName: 'ember_table/financial_table/table_tree_cell'
   classNames:   'ember-table-table-tree-cell'
   paddingStyle: Ember.computed ->
     "padding-left:#{@get('row.indentation')}px;"
   .property 'row.indentation'
 
 App.FinancialTableExample.HeaderTreeCell = Ember.Table.HeaderCell.extend
-  templateName: 'financial_table/table_header_tree_cell'
+  templateName: 'ember_table/financial_table/table_header_tree_cell'
   classNames:   'ember-table-table-header-tree-cell'

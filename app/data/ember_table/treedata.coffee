@@ -1,4 +1,4 @@
-window.treedata = {
+App.data.treedata = {
   "root": {
     "group_value": "Total",
     "level": 0,
