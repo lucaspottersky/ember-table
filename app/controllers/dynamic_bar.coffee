@@ -1,25 +1,4 @@
-window.App = Ember.Application.create()
-
-App.TableBarExample = Ember.Namespace.create()
-
-App.TableBarExample.BarCell = Ember.Table.TableCell.extend
-  templateName:     'bar-cell'
-  classNameBindings:['column.color']
-  barWidth: Ember.computed ->
-    {column, row} = @getProperties 'column', 'row'
-    return 0 unless column and row
-    Math.round(+@get('cellContent'))
-  .property 'cellContent'
-
-  histogramStyle: Ember.computed ->
-    "width: #{@get('barWidth')}%;"
-  .property 'barWidth'
-
-App.ApplicationView = Ember.View.extend
-  classNames: 'ember-app'
-  templateName: 'application'
-
-App.ApplicationController = Ember.Controller.extend
+App.DynamicBarTableExampleController = Ember.Controller.extend
   numRows: 100
 
   init: ->

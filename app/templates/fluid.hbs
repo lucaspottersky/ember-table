@@ -1,0 +1,21 @@
+{{!-- Content Column --}}
+<div class="col-md-10 col-md-offset-2 left-border main-content-container">
+  <h1>Ember Table <small>Fluid</small></h1>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="example-container">
+        <div class="ember-table-example-container">
+          {{view Ember.Table.EmberTableComponent
+            hasHeader=true
+            hasFooter=false
+            numFixedColumns=0
+            rowHeight=30
+            columnsBinding="columns"
+            contentBinding="content"
+          }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

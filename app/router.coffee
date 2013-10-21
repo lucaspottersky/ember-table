@@ -3,11 +3,15 @@
 ################################################################################
 
 App.Router.map ->
-  @route 'documentation'
-  @route 'license'
-  @route 'simple'
-  @route 'financial'
-  @route 'editable'
+  @route 'ajax'
   @route 'bars'
   @route 'charts'
-  @route 'ajax'
+  @route 'documentation'
+  @route 'dynamic-bar'
+  @route 'editable'
+  @route 'financial'
+  @route 'fluid'
+  @route 'horizon'
+  @route 'license'
+  @route 'simple'
+  @route 'sparkline'

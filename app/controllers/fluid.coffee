@@ -1,16 +1,10 @@
-window.App = Ember.Application.create()
-
 App.FluidColumnDefinition = Ember.Table.ColumnDefinition.extend
   columnWidth: Ember.computed ->
     percentWidth = @get('percentColumnWidth') / 100.0
     Math.floor(percentWidth * @get('controller._width'))
   .property 'controller._width', 'percentColumnWidth'
 
-App.ApplicationView = Ember.View.extend
-  classNames: 'ember-app'
-  templateName: 'application'
-
-App.ApplicationController = Ember.Controller.extend
+App.FluidTableExampleController = Ember.Controller.extend
   numRows: 100
 
   columns: Ember.computed ->
