@@ -48,3 +48,6 @@ require 'build/app/main'
 
 # Compiled Handlebars templates
 require 'build/app/templates'
+
+# set google code prettifier options
+window['PR_SHOULD_USE_CONTINUATION'] = false;
