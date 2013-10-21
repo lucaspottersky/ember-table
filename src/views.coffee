@@ -392,7 +392,7 @@ Ember.TouchMoveHandlerMixin, Ember.ScrollHandlerMixin,
   ###
   onMouseWheel: (event, delta, deltaX, deltaY) ->
     return unless Math.abs(deltaX) > Math.abs(deltaY)
-    scrollLeft = @$('.ember-table-right-table-block').scrollLeft() + deltaX * 50
+    scrollLeft = @$('.ember-table-right-table-block').scrollLeft() + deltaX
     @set 'scrollLeft', scrollLeft
     event.preventDefault()
 
@@ -437,7 +437,7 @@ Ember.TouchMoveHandlerMixin,
             'controller._tableContentHeight')
 
   onMouseWheel: (event, delta, deltaX, deltaY) ->
-    scrollLeft = @$('.ember-table-right-table-block').scrollLeft() + deltaX * 50
+    scrollLeft = @$('.ember-table-right-table-block').scrollLeft() + deltaX
     @set 'scrollLeft', scrollLeft
     event.preventDefault()
 

@@ -411,7 +411,6 @@ if (!jQuery.browser) {
 })();
 (function() {
 
-
 Ember.LazyContainerView = Ember.ContainerView.extend(Ember.AddeparMixins.StyleBindingsMixin, {
   classNames: 'lazy-list-container',
   styleBindings: ['height'],
@@ -1165,7 +1164,7 @@ Ember.Table.BodyTableContainer = Ember.Table.TableContainer.extend(Ember.MouseWh
     if (!(Math.abs(deltaX) > Math.abs(deltaY))) {
       return;
     }
-    scrollLeft = this.$('.ember-table-right-table-block').scrollLeft() + deltaX * 50;
+    scrollLeft = this.$('.ember-table-right-table-block').scrollLeft() + deltaX;
     this.set('scrollLeft', scrollLeft);
     return event.preventDefault();
   },
@@ -1218,7 +1217,7 @@ Ember.Table.FooterTableContainer = Ember.Table.TableContainer.extend(Ember.Mouse
   }).property('controller._bodyHeight', 'controller._headerHeight', 'controller._tableContentHeight'),
   onMouseWheel: function(event, delta, deltaX, deltaY) {
     var scrollLeft;
-    scrollLeft = this.$('.ember-table-right-table-block').scrollLeft() + deltaX * 50;
+    scrollLeft = this.$('.ember-table-right-table-block').scrollLeft() + deltaX;
     this.set('scrollLeft', scrollLeft);
     return event.preventDefault();
   },
