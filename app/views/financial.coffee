@@ -31,7 +31,7 @@ App.FinancialTableExample.TreeTableRow = Ember.Table.Row.extend
 
   computeRowStyle: (maxLevels) ->
     level = @getFormattingLevel @get('groupingLevel'), maxLevels
-    @set 'rowStyle', "row-style-#{level}"
+    @set 'rowStyle', "ember-table-row-style-#{level}"
 
   recursiveCollapse: (isCollapsed) ->
     @set 'isCollapsed', isCollapsed
