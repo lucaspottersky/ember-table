@@ -181,17 +181,13 @@
 .ember-table-table-row {
   // Height and Width defined dynamically through JS
   position: absolute;
+  // TODO(Louis): Add class "selectable" to rows that can be selected
+  cursor: pointer;
   .box-sizing();
 
   > div {
     height: 100%;
     .box-sizing();
-  }
-
-  &.ember-table-selected {
-    background-color: @table-row-selected-color !important;
-    color: #fff;
-    cursor: pointer;
   }
 }
 
@@ -611,6 +607,11 @@
 
   &.ember-table-last-row {
     border-bottom: none !important;
+  }
+
+  &.ember-table-selected {
+    background-color: @table-row-selected-color !important;
+    color: #fff !important;
   }
 }
 
