@@ -8,8 +8,12 @@ Ember.Component.extend Ember.AddeparMixins.StyleBindingsMixin,
 Ember.AddeparMixins.ResizeHandlerMixin,
   templateName:   'components/ember-table'
   classNames:     ['ember-table-tables-container']
+  attributeBindings: 'tabindex'
   styleBindings:  ['height']
   height:         Ember.computed.alias '_tablesContainerHeight'
+
+  # we need to set tabindex so that div responds to key events
+  tabindex: -1
 
   # Array of Ember.Table.ColumnDefinition
   columns: null
@@ -35,6 +39,8 @@ Ember.AddeparMixins.ResizeHandlerMixin,
   forceFillColumns: no
 
   enableColumnReorder: yes
+
+  selection: null
 
   # specify the view class to use for rendering the table rows
   tableRowViewClass: 'Ember.Table.TableRow'
@@ -337,5 +343,24 @@ Ember.AddeparMixins.ResizeHandlerMixin,
     return 0 unless columns
     widths = columns.getEach(columnWidthPath) or []
     widths.reduce ((total, w) -> total + w), 0
+
+  ##############################################################################
+  # selection
+  ##############################################################################
+  mouseDown: (event) ->
+    row = @getRowForEvent event
+    return unless row
+    content = @get('bodyContent') or []
+    oldSelection = @get 'selection'
+    if oldSelection
+      oldRow = content.findProperty('content', oldSelection)
+      oldRow.set 'isSelected', no
+    row.set 'isSelected', yes
+    @set 'selection', row.get('content')
+
+  getRowForEvent: (event) ->
+    $rowView = $(event.target).parents('.ember-table-table-row')
+    view     = Ember.View.views[$rowView.attr('id')]
+    view.get 'row' if view
 
 Ember.Handlebars.helper('addepar-table', Ember.Table.EmberTableComponent)

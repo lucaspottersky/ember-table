@@ -119,7 +119,7 @@ Ember.Table.TableRow = Ember.LazyItemView.extend
 ###
 Ember.Table.TableCell =
 Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
-  defaultTemplate: Ember.Handlebars.compile('{{view.cellContent}}')
+  templateName: 'table-cell'
   classNames:         ['ember-table-cell']
   classNameBindings:  'column.textAlign'
   styleBindings:      'width'
@@ -357,15 +357,6 @@ Ember.TouchMoveHandlerMixin, Ember.ScrollHandlerMixin,
   scrollLeft:     Ember.computed.alias 'controller._tableScrollLeft'
   scrollElementSelector: '.antiscroll-inner'
   firefoxScrollDistance:  52
-
-  ###*
-  * On scroll top did change observer
-  * @memberof Ember.Table.BodyTableContainer
-  * @instance
-  ###
-  onScrollTopDidChange: Ember.observer ->
-    @$().scrollTop @get('scrollTop')
-  , 'scrollTop'
 
   mouseEnter: (event) ->
     $tablesContainer = $(event.target).parents('.ember-table-tables-container')

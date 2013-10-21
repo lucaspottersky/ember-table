@@ -16,7 +16,6 @@ require 'build/src/utils/lazy_container_view'
 require 'build/src/utils/utils'
 
 # Ember-Table
-require 'build/src/row_selection_mixin'
 require 'build/src/column'
 require 'build/src/views'
 require 'build/src/component'

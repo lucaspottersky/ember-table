@@ -209,6 +209,18 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
+Ember.TEMPLATES["table-cell"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var hashTypes, hashContexts, escapeExpression=this.escapeExpression;
+
+
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "view.cellContent", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  
+});
+
 Ember.TEMPLATES["table-row"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -395,7 +407,6 @@ if (!jQuery.browser) {
 
 })();
 (function() {
-
 
 Ember.LazyContainerView = Ember.ContainerView.extend(Ember.AddeparMixins.StyleBindingsMixin, {
   classNames: 'lazy-list-container',
@@ -614,200 +625,6 @@ Ember.Table.RowArrayController = Ember.ArrayController.extend({
     });
     subControllers[idx] = subController;
     return subController;
-  }
-});
-
-
-})();
-(function() {
-
-var indexesOf;
-
-indexesOf = Ember.EnumerableUtils.indexesOf;
-
-Ember.Table.RowSelectionMixin = Ember.Mixin.create({
-  attributeBindings: 'tabindex',
-  content: Ember.computed.alias('controller.bodyContent'),
-  rowHeight: Ember.computed.alias('controller.rowHeight'),
-  numItemsShowing: Ember.computed.alias('controller._numItemsShowing'),
-  startIndex: Ember.computed.alias('controller._startIndex'),
-  scrollTop: Ember.computed.alias('controller._tableScrollTop'),
-  tabindex: -1,
-  KEY_EVENTS: {
-    37: 'leftArrowPressed',
-    38: 'upArrowPressed',
-    39: 'rightArrowPressed',
-    40: 'downArrowPressed'
-  },
-  _calculateSelectionIndices: function(value) {
-    var content, indices, rows, selection;
-    selection = this.get('selectionIndices');
-    selection.clear();
-    rows = this.get('content');
-    if (rows) {
-      content = rows.mapProperty('content');
-      indices = indexesOf(content, value);
-      indices = indices.filter(function(idx) {
-        return idx > 0;
-      });
-      selection.addObjects(indices);
-    }
-  },
-  contentDidChange: Ember.observer(function() {
-    return this._calculateSelectionIndices(this.get('selection'));
-  }, 'content.@each.content'),
-  selection: Ember.computed(function(key, value) {
-    var rows, selection;
-    rows = this.get('content') || [];
-    selection = this.get('selectionIndices');
-    value = value || [];
-    if (arguments.length === 1) {
-      value = selection.map(function(index) {
-        return rows.objectAt(index).get('content');
-      });
-    } else {
-      this._calculateSelectionIndices(value);
-    }
-    return value;
-  }).property('selectionIndices.[]'),
-  selectionIndices: Ember.computed(function() {
-    var set;
-    set = new Ember.Set();
-    set.addEnumerableObserver(this);
-    return set;
-  }).property(),
-  enumerableDidChange: Ember.K,
-  enumerableWillChange: function(set, removing, adding) {
-    var content;
-    content = this.get('content');
-    if (!content) {
-      return;
-    }
-    if ('number' === typeof removing) {
-      set.forEach(function(index) {
-        var row;
-        row = content.objectAt(index);
-        if (row) {
-          return row.set('isSelected', false);
-        }
-      });
-    } else if (removing) {
-      removing.forEach(function(index) {
-        var row;
-        row = content.objectAt(index);
-        if (row) {
-          return row.set('isSelected', false);
-        }
-      });
-    }
-    if (adding && 'number' !== typeof adding) {
-      return adding.forEach(function(index) {
-        var row;
-        row = content.objectAt(index);
-        if (row) {
-          return row.set('isSelected', true);
-        }
-      });
-    }
-  },
-  mouseDown: function(event) {
-    var index, sel;
-    index = this.getIndexForEvent(event);
-    sel = this.get('selectionIndices');
-    if (sel.contains(index) && sel.length === 1) {
-      return sel.clear();
-    }
-    return this.setSelectionIndex(index);
-  },
-  keyDown: function(event) {
-    var map, method, _ref;
-    map = this.get('KEY_EVENTS');
-    method = map[event.keyCode];
-    if (method) {
-      return (_ref = this.get(method)) != null ? _ref.apply(this, arguments) : void 0;
-    }
-  },
-  upArrowPressed: function(event) {
-    var index, sel;
-    event.preventDefault();
-    sel = this.get('selectionIndices.lastObject');
-    index = event.ctrlKey || event.metaKey ? 0 : sel - 1;
-    return this.setSelectionIndex(index);
-  },
-  downArrowPressed: function(event) {
-    var clen, index, sel;
-    event.preventDefault();
-    sel = this.get('selectionIndices.lastObject');
-    clen = this.get('content.length');
-    index = event.ctrlKey || event.metaKey ? clen - 1 : sel + 1;
-    return this.setSelectionIndex(index);
-  },
-  getIndexForEvent: function(event) {
-    return this.getRowIndexFast(this.getRowForEvent(event));
-  },
-  getRowForEvent: function(event) {
-    var $rowView, view;
-    $rowView = $(event.target).parents('.table-row');
-    view = Ember.View.views[$rowView.attr('id')];
-    if (view) {
-      return view.get('row');
-    }
-  },
-  getRowIndexFast: function(row) {
-    var index, numRows, startIndex, sublist;
-    startIndex = this.get('startIndex');
-    numRows = this.get('numItemsShowing') + 1;
-    sublist = this.get('content').slice(startIndex, startIndex + numRows);
-    index = sublist.indexOf(row);
-    if (index < 0) {
-      return index;
-    } else {
-      return index + startIndex;
-    }
-  },
-  setSelectionIndex: function(index) {
-    var sel;
-    if (!this.ensureIndex(index)) {
-      return;
-    }
-    sel = this.get('selectionIndices');
-    this.get('selectionIndices').clear();
-    return this.toggleSelectionIndex(index);
-  },
-  toggleSelectionIndex: function(index) {
-    var sel;
-    if (!this.ensureIndex(index)) {
-      return;
-    }
-    sel = this.get('selectionIndices');
-    if (sel.contains(index)) {
-      sel.remove(index);
-    } else {
-      sel.add(index);
-    }
-    return this.ensureVisible(index);
-  },
-  ensureIndex: function(index) {
-    var clen;
-    clen = this.get('content.length');
-    return index >= 0 && index < clen;
-  },
-  ensureVisible: function(index) {
-    var endIndex, numRows, startIndex;
-    startIndex = this.get('startIndex');
-    numRows = this.get('numItemsShowing');
-    endIndex = startIndex + numRows;
-    if (index < startIndex) {
-      return this.scrollToRowIndex(index);
-    } else if (index >= endIndex) {
-      return this.scrollToRowIndex(index - numRows + 1);
-    }
-  },
-  scrollToRowIndex: function(index) {
-    var rowHeight, scrollTop;
-    rowHeight = this.get('rowHeight');
-    scrollTop = index * rowHeight;
-    return this.set('scrollTop', scrollTop);
   }
 });
 
@@ -1043,7 +860,7 @@ Ember.Table.TableRow = Ember.LazyItemView.extend({
 
 
 Ember.Table.TableCell = Ember.View.extend(Ember.AddeparMixins.StyleBindingsMixin, {
-  defaultTemplate: Ember.Handlebars.compile('{{view.cellContent}}'),
+  templateName: 'table-cell',
   classNames: ['ember-table-cell'],
   classNameBindings: 'column.textAlign',
   styleBindings: 'width',
@@ -1300,15 +1117,6 @@ Ember.Table.BodyTableContainer = Ember.Table.TableContainer.extend(Ember.MouseWh
   scrollLeft: Ember.computed.alias('controller._tableScrollLeft'),
   scrollElementSelector: '.antiscroll-inner',
   firefoxScrollDistance: 52,
-  /**
-  * On scroll top did change observer
-  * @memberof Ember.Table.BodyTableContainer
-  * @instance
-  */
-
-  onScrollTopDidChange: Ember.observer(function() {
-    return this.$().scrollTop(this.get('scrollTop'));
-  }, 'scrollTop'),
   mouseEnter: function(event) {
     var $horizontalScroll, $tablesContainer;
     $tablesContainer = $(event.target).parents('.ember-table-tables-container');
@@ -1495,8 +1303,10 @@ Ember.Table.ScrollPanel = Ember.View.extend(Ember.AddeparMixins.StyleBindingsMix
 Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.StyleBindingsMixin, Ember.AddeparMixins.ResizeHandlerMixin, {
   templateName: 'components/ember-table',
   classNames: ['ember-table-tables-container'],
+  attributeBindings: 'tabindex',
   styleBindings: ['height'],
   height: Ember.computed.alias('_tablesContainerHeight'),
+  tabindex: -1,
   columns: null,
   numFixedColumns: 0,
   numFooterRow: 0,
@@ -1507,6 +1317,7 @@ Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.Sty
   hasFooter: true,
   forceFillColumns: false,
   enableColumnReorder: true,
+  selection: null,
   tableRowViewClass: 'Ember.Table.TableRow',
   actions: {
     addColumn: Ember.K,
@@ -1851,6 +1662,29 @@ Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.Sty
     return widths.reduce((function(total, w) {
       return total + w;
     }), 0);
+  },
+  mouseDown: function(event) {
+    var content, oldRow, oldSelection, row;
+    row = this.getRowForEvent(event);
+    if (!row) {
+      return;
+    }
+    content = this.get('bodyContent') || [];
+    oldSelection = this.get('selection');
+    if (oldSelection) {
+      oldRow = content.findProperty('content', oldSelection);
+      oldRow.set('isSelected', false);
+    }
+    row.set('isSelected', true);
+    return this.set('selection', row.get('content'));
+  },
+  getRowForEvent: function(event) {
+    var $rowView, view;
+    $rowView = $(event.target).parents('.ember-table-table-row');
+    view = Ember.View.views[$rowView.attr('id')];
+    if (view) {
+      return view.get('row');
+    }
   }
 });
 
