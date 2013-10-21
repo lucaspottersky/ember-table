@@ -198,7 +198,9 @@ Ember.Table.HeaderRow =
 Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
   templateName:   'header-row'
   classNames:     ['ember-table-table-row', 'ember-table-header-row']
+  styleBindings: ['width']
   columns:        Ember.computed.alias 'content'
+  width:          Ember.computed.alias 'controller._rowWidth'
   scrollLeft:     Ember.computed.alias 'controller._tableScrollLeft'
 
   ###*
