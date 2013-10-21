@@ -332,7 +332,8 @@ Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
 * @mixes Ember.MouseWheelHandlerMixin
 * @mixes Ember.TouchMoveHandlerMixin
 ###
-Ember.Table.HeaderTableContainer = Ember.Table.TableContainer.extend
+Ember.Table.HeaderTableContainer =
+Ember.Table.TableContainer.extend Ember.Table.ShowHorizontalScrollMixin,
   templateName: 'header-container'
   classNames:   ['ember-table-table-container',
                  'ember-table-fixed-table-container',
@@ -351,6 +352,7 @@ Ember.Table.HeaderTableContainer = Ember.Table.TableContainer.extend
 Ember.Table.BodyTableContainer =
 Ember.Table.TableContainer.extend Ember.MouseWheelHandlerMixin,
 Ember.TouchMoveHandlerMixin, Ember.ScrollHandlerMixin,
+Ember.Table.ShowHorizontalScrollMixin,
   templateName:   'body-container'
   classNames:     ['ember-table-table-container', 'ember-table-body-container',
                    'antiscroll-wrap']
@@ -359,17 +361,6 @@ Ember.TouchMoveHandlerMixin, Ember.ScrollHandlerMixin,
   scrollTop:      Ember.computed.alias 'controller._tableScrollTop'
   scrollLeft:     Ember.computed.alias 'controller._tableScrollLeft'
   scrollElementSelector: '.antiscroll-inner'
-  firefoxScrollDistance:  52
-
-  mouseEnter: (event) ->
-    $tablesContainer = $(event.target).parents('.ember-table-tables-container')
-    $horizontalScroll = $tablesContainer.find('.antiscroll-scrollbar-horizontal')
-    $horizontalScroll.addClass('antiscroll-scrollbar-shown')
-
-  mouseLeave: (event) ->
-    $tablesContainer = $(event.target).parents('.ember-table-tables-container')
-    $horizontalScroll = $tablesContainer.find('.antiscroll-scrollbar-horizontal')
-    $horizontalScroll.removeClass('antiscroll-scrollbar-shown')
 
   ###*
   * On scroll callback
@@ -419,7 +410,7 @@ Ember.TouchMoveHandlerMixin, Ember.ScrollHandlerMixin,
 ###
 Ember.Table.FooterTableContainer =
 Ember.Table.TableContainer.extend Ember.MouseWheelHandlerMixin,
-Ember.TouchMoveHandlerMixin,
+Ember.TouchMoveHandlerMixin, Ember.Table.ShowHorizontalScrollMixin,
   templateName:   'footer-container'
   classNames:     ['ember-table-table-container',
                    'ember-table-fixed-table-container',
@@ -446,18 +437,6 @@ Ember.TouchMoveHandlerMixin,
     @set 'scrollLeft', scrollLeft
     event.preventDefault()
 
-  # TODO(Peter/Louis): This should be a mixin - duplicated
-  # inside Ember.Table.BodyTableContainer
-  mouseEnter: (event) ->
-    $tablesContainer = $(event.target).parents('.ember-table-tables-container')
-    $horizontalScroll = $tablesContainer.find('.antiscroll-scrollbar-horizontal')
-    $horizontalScroll.addClass('antiscroll-scrollbar-shown')
-
-  mouseLeave: (event) ->
-    $tablesContainer = $(event.target).parents('.ember-table-tables-container')
-    $horizontalScroll = $tablesContainer.find('.antiscroll-scrollbar-horizontal')
-    $horizontalScroll.removeClass('antiscroll-scrollbar-shown')
-
 ###*
 * Scroll Container
 * @class
@@ -479,6 +458,13 @@ Ember.ScrollHandlerMixin,
   scrollTop:      Ember.computed.alias 'controller._tableScrollTop'
   scrollLeft:     Ember.computed.alias 'controller._tableScrollLeft'
 
+  # HACK: onScrollLeftDidChange will not fire unless scrollLeft has been get
+  # at least once. Therefore, we want to call onScrollLeftDidChange in
+  # didInsertElement
+  didInsertElement: ->
+    @_super()
+    @onScrollLeftDidChange()
+
   ###*
   * On scroll callback
   * @memberof Ember.Table.ScrollContainer
@@ -496,7 +482,7 @@ Ember.ScrollHandlerMixin,
   ###
   onScrollLeftDidChange: Ember.observer ->
     selector = @get('scrollElementSelector')
-    this.$(selector).scrollLeft @get('scrollLeft')
+    @$(selector).scrollLeft @get('scrollLeft')
   , 'scrollLeft', 'scrollElementSelector'
 
 ###*

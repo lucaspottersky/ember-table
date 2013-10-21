@@ -632,6 +632,21 @@ Ember.Table.RowArrayController = Ember.ArrayController.extend({
   }
 });
 
+Ember.Table.ShowHorizontalScrollMixin = Ember.Mixin.create({
+  mouseEnter: function(event) {
+    var $horizontalScroll, $tablesContainer;
+    $tablesContainer = $(event.target).parents('.ember-table-tables-container');
+    $horizontalScroll = $tablesContainer.find('.antiscroll-scrollbar-horizontal');
+    return $horizontalScroll.addClass('antiscroll-scrollbar-shown');
+  },
+  mouseLeave: function(event) {
+    var $horizontalScroll, $tablesContainer;
+    $tablesContainer = $(event.target).parents('.ember-table-tables-container');
+    $horizontalScroll = $tablesContainer.find('.antiscroll-scrollbar-horizontal');
+    return $horizontalScroll.removeClass('antiscroll-scrollbar-shown');
+  }
+});
+
 
 })();
 (function() {
@@ -1101,7 +1116,7 @@ Ember.Table.ColumnSortableIndicator = Ember.View.extend(Ember.AddeparMixins.Styl
 */
 
 
-Ember.Table.HeaderTableContainer = Ember.Table.TableContainer.extend({
+Ember.Table.HeaderTableContainer = Ember.Table.TableContainer.extend(Ember.Table.ShowHorizontalScrollMixin, {
   templateName: 'header-container',
   classNames: ['ember-table-table-container', 'ember-table-fixed-table-container', 'ember-table-header-container'],
   height: Ember.computed.alias('controller._headerHeight'),
@@ -1118,7 +1133,7 @@ Ember.Table.HeaderTableContainer = Ember.Table.TableContainer.extend({
 */
 
 
-Ember.Table.BodyTableContainer = Ember.Table.TableContainer.extend(Ember.MouseWheelHandlerMixin, Ember.TouchMoveHandlerMixin, Ember.ScrollHandlerMixin, {
+Ember.Table.BodyTableContainer = Ember.Table.TableContainer.extend(Ember.MouseWheelHandlerMixin, Ember.TouchMoveHandlerMixin, Ember.ScrollHandlerMixin, Ember.Table.ShowHorizontalScrollMixin, {
   templateName: 'body-container',
   classNames: ['ember-table-table-container', 'ember-table-body-container', 'antiscroll-wrap'],
   height: Ember.computed.alias('controller._bodyHeight'),
@@ -1126,19 +1141,6 @@ Ember.Table.BodyTableContainer = Ember.Table.TableContainer.extend(Ember.MouseWh
   scrollTop: Ember.computed.alias('controller._tableScrollTop'),
   scrollLeft: Ember.computed.alias('controller._tableScrollLeft'),
   scrollElementSelector: '.antiscroll-inner',
-  firefoxScrollDistance: 52,
-  mouseEnter: function(event) {
-    var $horizontalScroll, $tablesContainer;
-    $tablesContainer = $(event.target).parents('.ember-table-tables-container');
-    $horizontalScroll = $tablesContainer.find('.antiscroll-scrollbar-horizontal');
-    return $horizontalScroll.addClass('antiscroll-scrollbar-shown');
-  },
-  mouseLeave: function(event) {
-    var $horizontalScroll, $tablesContainer;
-    $tablesContainer = $(event.target).parents('.ember-table-tables-container');
-    $horizontalScroll = $tablesContainer.find('.antiscroll-scrollbar-horizontal');
-    return $horizontalScroll.removeClass('antiscroll-scrollbar-shown');
-  },
   /**
   * On scroll callback
   * @memberof Ember.Table.BodyTableContainer
@@ -1198,7 +1200,7 @@ Ember.Table.BodyTableContainer = Ember.Table.TableContainer.extend(Ember.MouseWh
 */
 
 
-Ember.Table.FooterTableContainer = Ember.Table.TableContainer.extend(Ember.MouseWheelHandlerMixin, Ember.TouchMoveHandlerMixin, {
+Ember.Table.FooterTableContainer = Ember.Table.TableContainer.extend(Ember.MouseWheelHandlerMixin, Ember.TouchMoveHandlerMixin, Ember.Table.ShowHorizontalScrollMixin, {
   templateName: 'footer-container',
   classNames: ['ember-table-table-container', 'ember-table-fixed-table-container', 'ember-table-footer-container'],
   styleBindings: 'top',
@@ -1227,18 +1229,6 @@ Ember.Table.FooterTableContainer = Ember.Table.TableContainer.extend(Ember.Mouse
     scrollLeft = this.$('.ember-table-right-table-block').scrollLeft() + deltaX;
     this.set('scrollLeft', scrollLeft);
     return event.preventDefault();
-  },
-  mouseEnter: function(event) {
-    var $horizontalScroll, $tablesContainer;
-    $tablesContainer = $(event.target).parents('.ember-table-tables-container');
-    $horizontalScroll = $tablesContainer.find('.antiscroll-scrollbar-horizontal');
-    return $horizontalScroll.addClass('antiscroll-scrollbar-shown');
-  },
-  mouseLeave: function(event) {
-    var $horizontalScroll, $tablesContainer;
-    $tablesContainer = $(event.target).parents('.ember-table-tables-container');
-    $horizontalScroll = $tablesContainer.find('.antiscroll-scrollbar-horizontal');
-    return $horizontalScroll.removeClass('antiscroll-scrollbar-shown');
   }
 });
 
@@ -1261,6 +1251,10 @@ Ember.Table.ScrollContainer = Ember.View.extend(Ember.AddeparMixins.StyleBinding
   left: Ember.computed.alias('controller._fixedColumnsWidth'),
   scrollTop: Ember.computed.alias('controller._tableScrollTop'),
   scrollLeft: Ember.computed.alias('controller._tableScrollLeft'),
+  didInsertElement: function() {
+    this._super();
+    return this.onScrollLeftDidChange();
+  },
   /**
   * On scroll callback
   * @memberof Ember.Table.ScrollContainer

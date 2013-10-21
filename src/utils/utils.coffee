@@ -82,3 +82,15 @@ Ember.Table.RowArrayController = Ember.ArrayController.extend
       content: object
     subControllers[idx] = subController;
     return subController;
+
+# HACK: We want the horizontal scroll to show on mouse enter and leave.
+Ember.Table.ShowHorizontalScrollMixin = Ember.Mixin.create
+  mouseEnter: (event) ->
+    $tablesContainer = $(event.target).parents('.ember-table-tables-container')
+    $horizontalScroll = $tablesContainer.find('.antiscroll-scrollbar-horizontal')
+    $horizontalScroll.addClass('antiscroll-scrollbar-shown')
+
+  mouseLeave: (event) ->
+    $tablesContainer = $(event.target).parents('.ember-table-tables-container')
+    $horizontalScroll = $tablesContainer.find('.antiscroll-scrollbar-horizontal')
+    $horizontalScroll.removeClass('antiscroll-scrollbar-shown')
