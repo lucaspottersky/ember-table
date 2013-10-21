@@ -14,7 +14,7 @@
 
 // Addepar Open Source
 // -------------------------
-@import 'typography.less';
+// @import 'typography.less';
 @import 'mixins.less';
 // Variables used for this file
 @import 'variables.less';
@@ -33,6 +33,24 @@ html, body {
 
 /* Typography
 -------------------------------------------------- */
+
+/*
+  From Fonts.com:
+
+  Univers Next
+  font-family: 'UniversNW01-130BUlLt';
+  font-family: 'UniversNW01-230BThin';
+  font-family: 'Univers Next W01 Light';
+  font-family: 'UniversNextW01-Regular';
+  font-family: 'Univers Next W01 Medium';
+  font-family: 'Univers Next W01 Bold';
+
+  Univers (Tabular numbers)
+  font-family: 'Univers LT W01 45 Light';
+  font-family: 'Univers LT W01 55 Roman';
+  font-family: 'Univers LT W01 65 Bold';
+*/
+
 h1,
 h2,
 h3,
@@ -41,7 +59,6 @@ h5,
 h6 {
   font-family: @sansFontFamily;
   color: #45494D;
-  font-weight: normal;
   line-height: 1.5;
 }
 
@@ -61,10 +78,12 @@ h2 {
 
 h3 {
   font: 300 18px/1.5 @sansFontFamily;
+  font-family: 'Univers Next W01 Light';
 }
 
 h4 {
   font: 500 15px/1.5 @sansFontFamily;
+  font-family: 'Univers Next W01 Medium';
 }
 
 h5 {
@@ -73,6 +92,7 @@ h5 {
   color: rgba(0, 0, 0, 0.4);
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   font: bold 13px/1.5 @sansFontFamily;
+  font-family: 'Univers Next W01 Bold';
   text-transform: uppercase;
   letter-spacing: 2px;
 }
@@ -81,16 +101,19 @@ p,
 .styled li {
   .box-sizing(border-box);
   font: 300 14px/1.62 @sansFontFamily;
+  font-family: 'Univers Next W01 Light';
   color: @55-percent-black;
   margin-bottom: 20px;
 
   &.elevated {
     font: 300 16px/1.62 @sansFontFamily;
+    font-family: 'Univers Next W01 Light';
     margin-bottom: 25px;
   }
 
   &.reduced {
     font: 300 11px/1.4 @sansFontFamily;
+    font-family: 'Univers Next W01 Light';
   }
 }
 
@@ -144,13 +167,14 @@ input[type="color"],
 strong {
   font-weight: 500;
   font-family: @sansFontFamily;
+  font-family: 'Univers Next W01 Medium';
 }
 
 /* Code Sample Styles */
 
 code, pre {
   display: block;
-  font-family : "SourceCodePro-Regular", Menlo, Monaco, Consolas, monospace;
+  font-family : 'SourceCodePro-Regular', Menlo, Monaco, Consolas, monospace;
   font-size: 12px;
   white-space: pre !important;
   word-wrap: normal;
@@ -166,6 +190,7 @@ pre {
 -------------------------------------------------- */
 .addepar-btn {
   font: 500 13px @sansFontFamily;
+  font-family: 'Univers Next W01 Medium';
   text-transform: uppercase;
   letter-spacing: 2px;
   text-shadow: none;
@@ -307,6 +332,7 @@ pre {
   font-size: 17px;
   color: #fff;
   font-weight: 200;
+  font-family: 'UniversNW01-230BThin';
   text-transform: uppercase;
   letter-spacing: 2px;
   padding-left: 20px;
@@ -370,13 +396,14 @@ pre {
 
 .hero-tagline h1 {
   font: 300 26px/1.5 @sansFontFamily;
+  font-family: 'Univers Next W01 Light';
   color: #fff;
   margin-bottom: 15px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 
   &.elevated {
     font-weight: 200;
-    font-family: @sansFontFamily;
+    font-family: 'UniversNW01-230BThin';
     font-size: 50px;
     text-transform: uppercase;
     letter-spacing: 15px;
@@ -387,7 +414,7 @@ pre {
 .hero-tagline p {
   color: #b3b3b3;
   font-weight: 300;
-  font-family: @sansFontFamily;
+  font-family: 'Univers Next W01 Light';
 }
 
 .hero-tagline .addepar-btn {
@@ -420,7 +447,7 @@ pre {
 
   .btn {
     font-weight: 500;
-    font-family: @sansFontFamily;
+    font-family: 'Univers Next W01 Medium';
     letter-spacing: 1px !important;
   }
 
@@ -464,6 +491,7 @@ pre {
 
 .section-title h1 {
   font-weight: 300;
+  font-family: 'Univers Next W01 Light';
   font-size: 24px;
   margin-bottom: 30px;
   color: #45494D;
@@ -555,6 +583,7 @@ pre {
   left: 15px;
   font-size: 12px;
   font-weight: 400;
+  font-family: 'Univers Next W01 Medium';
   letter-spacing: 1px;
   color: #aaa;
   text-transform: uppercase;
@@ -624,6 +653,7 @@ pre {
   .sub-title {
     margin-top: 30px;
     font-weight: 500;
+    font-family: 'Univers Next W01 Medium';
     letter-spacing: 1px;
     text-transform: uppercase;
     font-size: 12px;
@@ -636,7 +666,6 @@ pre {
 
     &.active {
       color: #333;
-      font-weight: 500;
     }
   }
 }
@@ -712,7 +741,7 @@ pre {
   margin-bottom: 50px;
 
   td:first-child {
-    font-weight: bold;
+    font-family: 'Univers Next W01 Bold';
     color: #333;
   }
 }
