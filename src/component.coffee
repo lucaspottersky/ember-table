@@ -84,7 +84,7 @@ Ember.AddeparMixins.ResizeHandlerMixin,
     return Ember.A() unless columns
     numFixedColumns = @get('numFixedColumns') or 0
     columns = columns.slice(0, numFixedColumns) or []
-    columns.setEach 'controller', this
+    @prepareTableColumns(columns)
     columns
   .property 'columns.@each', 'numFixedColumns'
 
@@ -99,9 +99,12 @@ Ember.AddeparMixins.ResizeHandlerMixin,
     return Ember.A() unless columns
     numFixedColumns = @get('numFixedColumns') or 0
     columns = columns.slice(numFixedColumns, columns.get('length')) or []
-    columns.setEach 'controller', this
+    @prepareTableColumns(columns)
     columns
   .property 'columns.@each', 'numFixedColumns'
+
+  prepareTableColumns: (columns) ->
+    columns.setEach 'controller', this
 
   ##############################################################################
   # View concerns

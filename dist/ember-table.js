@@ -1373,7 +1373,7 @@ Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.Sty
     }
     numFixedColumns = this.get('numFixedColumns') || 0;
     columns = columns.slice(0, numFixedColumns) || [];
-    columns.setEach('controller', this);
+    this.prepareTableColumns(columns);
     return columns;
   }).property('columns.@each', 'numFixedColumns'),
   /**
@@ -1391,9 +1391,12 @@ Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.Sty
     }
     numFixedColumns = this.get('numFixedColumns') || 0;
     columns = columns.slice(numFixedColumns, columns.get('length')) || [];
-    columns.setEach('controller', this);
+    this.prepareTableColumns(columns);
     return columns;
   }).property('columns.@each', 'numFixedColumns'),
+  prepareTableColumns: function(columns) {
+    return columns.setEach('controller', this);
+  },
   didInsertElement: function() {
     this._super();
     this.set('_tableScrollTop', 0);
