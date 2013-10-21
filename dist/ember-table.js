@@ -873,8 +873,9 @@ Ember.Table.TableCell = Ember.View.extend(Ember.AddeparMixins.StyleBindingsMixin
   rowContent: Ember.computed.alias('row.content'),
   width: Ember.computed.alias('column.columnWidth'),
   init: function() {
-    this._super.apply(this, arguments);
-    return this.contentPathDidChange();
+    this._super();
+    this.contentPathDidChange();
+    return this.contentDidChange();
   },
   contentDidChange: function() {
     return this.notifyPropertyChange('cellContent');

@@ -129,8 +129,9 @@ Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
   width:      Ember.computed.alias 'column.columnWidth'
 
   init: ->
-    @_super.apply(this, arguments)
+    @_super()
     @contentPathDidChange()
+    @contentDidChange()
 
   contentDidChange: ->
     @notifyPropertyChange 'cellContent'
