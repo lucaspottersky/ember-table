@@ -1,4 +1,4 @@
-App.DynamicBarTableExampleController = Ember.Controller.extend
+App.EmberTableDynamicBarController = Ember.Controller.extend
   numRows: 100
 
   init: ->
@@ -21,7 +21,7 @@ App.DynamicBarTableExampleController = Ember.Controller.extend
       Ember.Table.ColumnDefinition.create
         color: colors[index]
         headerCellName: 'Bar'
-        tableCellViewClass: 'App.TableBarExample.BarCell'
+        tableCellViewClass: 'App.EmberTableDynamicBar.BarCell'
         contentPath: "value#{number}"
     columns.unshift(column1)
     columns

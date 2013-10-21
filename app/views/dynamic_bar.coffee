@@ -1,7 +1,7 @@
-App.DynamicBarTableExample = Ember.Namespace.create()
+App.EmberTableDynamicBar = Ember.Namespace.create()
 
-App.DynamicBarTableExample.BarCell = Ember.Table.TableCell.extend
-  templateName:     'ember_table/bar-cell'
+App.EmberTableDynamicBar.BarCell = Ember.Table.TableCell.extend
+  templateName:     'ember_table/dynamic_bar/bar_cell'
   classNameBindings:['column.color']
   barWidth: Ember.computed ->
     {column, row} = @getProperties 'column', 'row'
