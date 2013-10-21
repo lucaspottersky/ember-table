@@ -9,8 +9,7 @@ App.TableEditableExample.EditableTableCell = Ember.Table.TableCell.extend
     typeBinding:  'parentView.type'
     valueBinding: 'parentView.cellContent'
     didInsertElement: -> @$().focus()
-    blur: (event) ->
-      @set 'parentView.isEditing', no
+    focusOut: (event) -> @set 'parentView.isEditing', no
 
   onRowContentDidChange: Ember.observer ->
     @set 'isEditing', no

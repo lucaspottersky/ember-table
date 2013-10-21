@@ -411,7 +411,6 @@ if (!jQuery.browser) {
 })();
 (function() {
 
-
 Ember.LazyContainerView = Ember.ContainerView.extend(Ember.AddeparMixins.StyleBindingsMixin, {
   classNames: 'lazy-list-container',
   styleBindings: ['height'],
