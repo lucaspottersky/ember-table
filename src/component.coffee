@@ -8,12 +8,8 @@ Ember.Component.extend Ember.AddeparMixins.StyleBindingsMixin,
 Ember.AddeparMixins.ResizeHandlerMixin,
   templateName:   'components/ember-table'
   classNames:     ['ember-table-tables-container']
-  attributeBindings: 'tabindex'
   styleBindings:  ['height']
   height:         Ember.computed.alias '_tablesContainerHeight'
-
-  # we need to set tabindex so that div responds to key events
-  tabindex: -1
 
   # Array of Ember.Table.ColumnDefinition
   columns: null
