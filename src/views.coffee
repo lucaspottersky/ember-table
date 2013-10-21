@@ -129,8 +129,9 @@ Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
   width:      Ember.computed.alias 'column.columnWidth'
 
   init: ->
-    @_super.apply(this, arguments)
+    @_super()
     @contentPathDidChange()
+    @contentDidChange()
 
   contentDidChange: ->
     @notifyPropertyChange 'cellContent'
@@ -300,7 +301,7 @@ Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
   ###
   onColumnResize: (event, ui) ->
     @elementSizeDidChange()
-    @set 'columnWidth', ui.size.width
+    @get("column").resize(ui.size.width)
 
   elementSizeDidChange: ->
     maxHeight = 0

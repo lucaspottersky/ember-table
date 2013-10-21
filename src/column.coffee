@@ -31,6 +31,8 @@ Ember.Table.ColumnDefinition = Ember.Object.extend
   # The view class we want to use for the table cells
   tableCellViewClass:   'Ember.Table.TableCell'
 
+  resize: (width) -> @set 'columnWidth', width
+
   ###*
   * Get Cell Content - This gives a formatted value e.g. $20,000,000
   * @memberof Ember.Table.ColumnDefinition

@@ -7,12 +7,12 @@ App.EmberTableBarsController = Ember.Controller.extend
       columnWidth:    50
       headerCellName: 'Name'
       contentPath: 'key'
-    columns = [1..5].map (number, index) ->
+    columns = colors.map (color, index) ->
       Ember.Table.ColumnDefinition.create
-        color: colors[index]
+        color: color
         headerCellName: 'Bar'
-        tableCellViewClass: 'App.TableBarExample.BarCell'
-        contentPath: "value#{number}"
+        tableCellViewClass: 'App.BarTableCell'
+        contentPath: "value#{index + 1}"
     columns.unshift(column1)
     columns
 
