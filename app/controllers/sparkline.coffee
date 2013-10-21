@@ -29,6 +29,11 @@ App.EmberTableSparklineController = Ember.Controller.extend
     [name, open, spark, close, low, high]
 
   content: Ember.computed ->
+    randomWalk = (numSteps) ->
+      lastValue = 0
+      [0...numSteps].map ->
+        lastValue = lastValue + d3.random.normal()()
+
     [0...@get('numRows')].map (num, index) ->
       data = randomWalk(100)
       name: index
