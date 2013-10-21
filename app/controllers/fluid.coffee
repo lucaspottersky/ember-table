@@ -4,7 +4,7 @@ App.FluidColumnDefinition = Ember.Table.ColumnDefinition.extend
     Math.floor(percentWidth * @get('controller._width'))
   .property 'controller._width', 'percentColumnWidth'
 
-App.FluidTableExampleController = Ember.Controller.extend
+App.EmberTableFluidController = Ember.Controller.extend
   numRows: 100
 
   columns: Ember.computed ->

@@ -1,4 +1,4 @@
-App.HorizonTableExampleController = Ember.Controller.extend
+App.EmberTableHorizonController = Ember.Controller.extend
   numRows: 100
 
   columns: Ember.computed ->

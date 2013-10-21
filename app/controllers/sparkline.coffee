@@ -1,4 +1,4 @@
-App.SparklineTableExampleController = Ember.Controller.extend
+App.EmberTableSparklineController = Ember.Controller.extend
   numRows: 100
   columns: Ember.computed ->
     name = Ember.Table.ColumnDefinition.create
