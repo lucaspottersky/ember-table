@@ -10,6 +10,7 @@ require 'dependencies/date'
 
 # Editable Horizon and Sparkline dependency
 require 'dependencies/d3.v3'
+require 'dependencies/horizon'
 
 window.App = Ember.Application.create
   LOG_TRANSITIONS: true

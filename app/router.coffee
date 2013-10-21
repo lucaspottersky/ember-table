@@ -7,7 +7,6 @@ App.Router.map ->
   @resource 'emberTable', path: '/ember-table', ->
     @route 'ajax'
     @route 'bars'
-    @route 'charts'
     @route 'documentation'
     @route 'dynamic-bar'
     @route 'editable'
