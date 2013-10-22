@@ -18,8 +18,7 @@ App.EditableTableCell = Ember.Table.TableCell.extend
     @set 'isEditing', yes
     event.stopPropagation()
 
-App.DatePickerTableCell =
-App.EditableTableCell.extend
+App.DatePickerTableCell = App.EditableTableCell.extend
   type: 'date'
 
 App.RatingTableCell = Ember.Table.TableCell.extend

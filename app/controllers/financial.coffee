@@ -11,12 +11,98 @@ Number.prototype.toPercent = ->
   return '-' if isNaN(@) or not isFinite(@)
   Math.abs(this * 100).toFixed(2) + '%'
 
-App.FinancialTableExample = Ember.Namespace.create()
+App.FinancialTableTreeTableRow = Ember.Table.Row.extend
+  content:  null
+  children: null
+  parent:   null
+  isRoot:   no
+  isLeaf:   no
+  isCollapsed: no
+  isShowing: yes
+  indentationSpacing: 20
+  groupName: null
 
-# Ember-Table: Data transformation
+  # This may look ugly, but this is necessary. By doing the styles computation
+  # imperatively we made the initial table load 10-100x faster (certain cases)
+  computeStyles: (parent) ->
+    groupingLevel = 0
+    indentation   = 0
+    isShowing     = yes
+    if parent
+      isShowing = parent.get('isShowing') and not parent.get('isCollapsed')
+      pGroupingLevel = parent.get 'groupingLevel'
+      groupingLevel  = pGroupingLevel
+      groupingLevel  += 1 if parent.get('groupName') isnt @get('groupName')
+      indentType = if groupingLevel is pGroupingLevel then 'half' else 'full'
+      spacing    = @get 'indentationSpacing'
+      if not parent.get('isRoot')
+        indentation = parent.get('indentation')
+        indentation += (if indentType is 'half' then spacing / 2 else spacing)
+    @set 'groupingLevel', groupingLevel
+    @set 'indentation', indentation
+    @set 'isShowing', isShowing
 
-# Convert tree data into columns, bodyContent and footerContent for the table
-App.FinancialTableExample.TreeDataAdapter = Ember.Mixin.create
+  computeRowStyle: (maxLevels) ->
+    level = @getFormattingLevel @get('groupingLevel'), maxLevels
+    @set 'rowStyle', "ember-table-row-style-#{level}"
+
+  recursiveCollapse: (isCollapsed) ->
+    @set 'isCollapsed', isCollapsed
+    @get('children').forEach (child) ->
+      child.recursiveCollapse isCollapsed
+
+  getFormattingLevel: (level, maxLevels) ->
+    switch maxLevels
+      when 1 then return 5
+      when 2
+        return 2 if level is 1
+        return 5
+      when 3
+        return 1 if level is 1
+        return 3 if level is 2
+        return 5
+      when 4
+        return 1 if level is 1
+        return 2 if level is 2
+        return 4 if level is 4
+        return 5
+      when 5
+        return level
+      else
+        return 5 if level is maxLevels
+        return Math.min(level, 4)
+
+App.FinancialTableComponent = Ember.Table.EmberTableComponent.extend
+  # overridding default properties
+  numFixedColumns: 1
+  isCollapsed: no
+  isHeaderHeightResizable: yes
+  rowHeight: 30
+  hasHeader: yes
+  hasFooter: yes
+  headerHeight: 70
+
+  # custom properties
+  sortAscending: no
+  sortColumn: null
+  selection: null
+
+  actions:
+    toggleTableCollapse: (event) ->
+      @toggleProperty 'isCollapsed'
+      isCollapsed = @get 'isCollapsed'
+      children = @get('root.children')
+      return unless children and children.get('length') > 0
+      children.forEach (child) -> child.recursiveCollapse isCollapsed
+      @notifyPropertyChange 'rows'
+
+    toggleCollapse: (row) ->
+      row.toggleProperty 'isCollapsed'
+      Ember.run.next this, -> @notifyPropertyChange 'rows'
+
+  ##############################################################################
+  # Data Conversions
+  ##############################################################################
   data: null
 
   columns: Ember.computed ->
@@ -119,103 +205,3 @@ App.FinancialTableExample.TreeDataAdapter = Ember.Mixin.create
     node.computeStyles parent
     node.get('children').forEach (child) =>
       @computeStyles node, child
-
-App.FinancialTableTreeTableRow = Ember.Table.Row.extend
-  content:  null
-  children: null
-  parent:   null
-  isRoot:   no
-  isLeaf:   no
-  isCollapsed: no
-  isShowing: yes
-  indentationSpacing: 20
-  groupName: null
-
-  # This may look ugly, but this is necessary. By doing the styles computation
-  # imperatively we made the initial table load 10-100x faster (certain cases)
-  computeStyles: (parent) ->
-    groupingLevel = 0
-    indentation   = 0
-    isShowing     = yes
-    if parent
-      isShowing = parent.get('isShowing') and not parent.get('isCollapsed')
-      pGroupingLevel = parent.get 'groupingLevel'
-      groupingLevel  = pGroupingLevel
-      groupingLevel  += 1 if parent.get('groupName') isnt @get('groupName')
-      indentType = if groupingLevel is pGroupingLevel then 'half' else 'full'
-      spacing    = @get 'indentationSpacing'
-      if not parent.get('isRoot')
-        indentation = parent.get('indentation')
-        indentation += (if indentType is 'half' then spacing / 2 else spacing)
-    @set 'groupingLevel', groupingLevel
-    @set 'indentation', indentation
-    @set 'isShowing', isShowing
-
-  computeRowStyle: (maxLevels) ->
-    level = @getFormattingLevel @get('groupingLevel'), maxLevels
-    @set 'rowStyle', "ember-table-row-style-#{level}"
-
-  recursiveCollapse: (isCollapsed) ->
-    @set 'isCollapsed', isCollapsed
-    @get('children').forEach (child) ->
-      child.recursiveCollapse isCollapsed
-
-  getFormattingLevel: (level, maxLevels) ->
-    switch maxLevels
-      when 1 then return 5
-      when 2
-        return 2 if level is 1
-        return 5
-      when 3
-        return 1 if level is 1
-        return 3 if level is 2
-        return 5
-      when 4
-        return 1 if level is 1
-        return 2 if level is 2
-        return 4 if level is 4
-        return 5
-      when 5
-        return level
-      else
-        return 5 if level is maxLevels
-        return Math.min(level, 4)
-
-# Ember-Table: Controller
-App.FinancialTableExample.TableComponent =
-Ember.Table.EmberTableComponent.extend App.FinancialTableExample.TreeDataAdapter,
-  # overridding default properties
-  numFixedColumns: 1
-  isCollapsed: no
-  isHeaderHeightResizable: yes
-  rowHeight: 30
-  hasHeader: yes
-  hasFooter: yes
-  headerHeight: 70
-
-  # custom properties
-  sortAscending: no
-  sortColumn: null
-  selection: null
-
-  actions:
-    toggleTableCollapse: (event) ->
-      @toggleProperty 'isCollapsed'
-      isCollapsed = @get 'isCollapsed'
-      children = @get('root.children')
-      return unless children and children.get('length') > 0
-      children.forEach (child) -> child.recursiveCollapse isCollapsed
-      @notifyPropertyChange 'rows'
-
-    toggleCollapse: (row) ->
-      row.toggleProperty 'isCollapsed'
-      Ember.run.next this, -> @notifyPropertyChange 'rows'
-
-    sortByColumn: (column) ->
-      column.toggleProperty 'sortAscending'
-      @set 'sortColumn', column
-      @set 'sortAscending', column.get('sortAscending')
-
-  onSelectionsDidChange: Ember.observer ->
-    console.log 'selectionsDidChange'
-  , 'selection.@each'
