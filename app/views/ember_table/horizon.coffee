@@ -1,6 +1,4 @@
-App.TableHorizonExample = Ember.Namespace.create()
-
-App.TableHorizonExample.HorizonTableCellView = Ember.Table.TableCell.extend
+App.HorizonTableCellView = Ember.Table.TableCell.extend
   template: Ember.Handlebars.compile("")
   heightBinding: 'controller.rowHeight'
   horizonContent: Ember.computed ->

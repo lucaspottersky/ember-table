@@ -12,8 +12,8 @@ App.EmberTableSparklineController = Ember.Controller.extend
     spark = Ember.Table.ColumnDefinition.create
       columnWidth: 200
       headerCellName: 'Sparkline'
-      tableCellViewClass: 'App.SparklineTableExample.SparkCellView'
-      getCellContent: Ember.K
+      tableCellViewClass: 'App.SparkLineTableCellView'
+      contentPath: 'timeseries'
     close = Ember.Table.ColumnDefinition.create
       columnWidth: 100
       headerCellName: 'Close'

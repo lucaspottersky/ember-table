@@ -411,7 +411,6 @@ if (!jQuery.browser) {
 })();
 (function() {
 
-
 Ember.LazyContainerView = Ember.ContainerView.extend(Ember.AddeparMixins.StyleBindingsMixin, {
   classNames: 'lazy-list-container',
   styleBindings: ['height'],
@@ -1693,7 +1692,7 @@ Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.Sty
   }
 });
 
-Ember.Handlebars.helper('addepar-table', Ember.Table.EmberTableComponent);
+Ember.Handlebars.helper('table-component', Ember.Table.EmberTableComponent);
 
 
 })();

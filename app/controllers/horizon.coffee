@@ -9,7 +9,7 @@ App.EmberTableHorizonController = Ember.Controller.extend
     horizon = Ember.Table.ColumnDefinition.create
       columnWidth: 600
       headerCellName: 'Horizon'
-      tableCellViewClass: 'App.TableHorizonExample.HorizonTableCellView'
+      tableCellViewClass: 'App.HorizonTableCellView'
       getCellContent: Ember.K
     [name, horizon]
 

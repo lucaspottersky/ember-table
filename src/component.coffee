@@ -362,4 +362,4 @@ Ember.AddeparMixins.ResizeHandlerMixin,
     view     = Ember.View.views[$rowView.attr('id')]
     view.get 'row' if view
 
-Ember.Handlebars.helper('addepar-table', Ember.Table.EmberTableComponent)
+Ember.Handlebars.helper('table-component', Ember.Table.EmberTableComponent)

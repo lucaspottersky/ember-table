@@ -1,28 +1,17 @@
-App.SparklineTableExample = Ember.Namespace.create()
-
-randomWalk = (numSteps) ->
-  lastValue = 0
-  [0...numSteps].map ->
-    lastValue = lastValue + d3.random.normal()()
-
-App.SparklineTableExample.SparkCellView = Ember.Table.TableCell.extend
+App.SparkLineTableCellView = Ember.Table.TableCell.extend
   template: Ember.Handlebars.compile("")
   heightBinding: 'controller.rowHeight'
 
-  sparkContent: Ember.computed ->
-    randomWalk(100)
-  .property()
-
-  onWidthDidChange: Ember.observer ->
+  onContentOrSizeDidChange: Ember.observer ->
     @$('svg').remove()
     @renderD3View()
-  , 'width'
+  , 'row', 'width'
 
-  didInsertElement: ->
-    @renderD3View()
+  didInsertElement: -> @renderD3View()
 
   renderD3View: ->
-    data  = @get 'sparkContent'
+    data  = @get 'row.timeseries'
+    return unless data
     h     = @get 'height'
     w     = @get 'width'
     p     = 2
