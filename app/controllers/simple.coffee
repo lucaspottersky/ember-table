@@ -4,6 +4,7 @@ App.EmberTableSimpleController = Ember.Controller.extend
   columns: Ember.computed ->
     dateColumn = Ember.Table.ColumnDefinition.create
       columnWidth: 150
+      textAlign: 'text-align-left'
       headerCellName: 'Date'
       getCellContent: (row) -> row['date'].toDateString();
     openColumn = Ember.Table.ColumnDefinition.create
