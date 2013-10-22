@@ -1,4 +1,4 @@
-App.EmberTableDynamicBarController = Ember.Controller.extend
+App.EmberTableDynamicBarsController = Ember.Controller.extend
   numRows: 100
 
   getNextValue: (current) ->

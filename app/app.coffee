@@ -21,7 +21,7 @@ require 'build/app/data/data'
 # Controllers
 require 'build/app/controllers/ajax'
 require 'build/app/controllers/bars'
-require 'build/app/controllers/dynamic_bar'
+require 'build/app/controllers/dynamic_bars'
 require 'build/app/controllers/editable'
 require 'build/app/controllers/financial'
 require 'build/app/controllers/fluid'

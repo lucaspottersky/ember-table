@@ -6,10 +6,10 @@ App.EmberTableDocumentationView = Ember.View.extend(App.SmallHeroAffixMixin)
 App.EmberTableAjaxView =
 Ember.View.extend(App.CodePrettyPrintMixin, App.SmallHeroAffixMixin)
 
-App.EmberTableBarView =
+App.EmberTableBarsView =
 Ember.View.extend(App.CodePrettyPrintMixin, App.SmallHeroAffixMixin)
 
-App.EmberTableDynamicBarView =
+App.EmberTableDynamicBarsView =
 Ember.View.extend(App.CodePrettyPrintMixin, App.SmallHeroAffixMixin)
 
 App.EmberTableEditableView =

@@ -9,7 +9,7 @@ App.Router.map ->
     @route 'documentation'
     @route 'ajax'
     @route 'bars'
-    @route 'dynamic-bar'
+    @route 'dynamic-bars'
     @route 'editable'
     @route 'financial'
     @route 'fluid'
