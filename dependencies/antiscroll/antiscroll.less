@@ -19,6 +19,9 @@
   -webkit-transition: linear 300ms opacity;
   -moz-transition: linear 300ms opacity;
   -o-transition: linear 300ms opacity;
+  // http://stackoverflow.com/questions/3461441/prevent-flicker-on-webkit-transition-of-webkit-transform
+  // http://stackoverflow.com/questions/12827135/css3-transform-affecting-other-elements-with-chrome-safari
+  -webkit-transform: translateZ(0);
 }
 
 .antiscroll-scrollbar-shown {
