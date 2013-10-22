@@ -620,6 +620,8 @@ pre {
 -------------------------------------------------- */
 .sub-navigation-sidebar {
   position: absolute;
+  // Note needed because it is absolutely positioned
+  max-width: 195px;
   padding-top: 30px;
   background-color: #fff;
 
@@ -696,6 +698,12 @@ pre {
 -------------------------------------------------- */
 @media (min-width: 980px) and (max-width: 1200px) {
 
+  .sub-navigation-sidebar {
+    max-width: 160px;
+  }
+  .github-navigation .btn {
+    width: 133px;
+  }
 }
 
 /* Portrait tablet to landscape and desktop
