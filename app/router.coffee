@@ -5,15 +5,15 @@
 App.Router.map ->
   @route 'license'
   @resource 'emberTable', path: '/ember-table', ->
+    @route 'overview'
+    @route 'documentation'
     @route 'ajax'
     @route 'bars'
-    @route 'documentation'
     @route 'dynamic-bar'
     @route 'editable'
     @route 'financial'
     @route 'fluid'
     @route 'horizon'
-    @route 'overview'
     @route 'simple'
     @route 'sparkline'
 
