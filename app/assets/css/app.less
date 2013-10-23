@@ -77,8 +77,12 @@ h1 {
 }
 
 h2 {
-  font: normal 18px/1.5 @sansFontFamily;
+  font: normal 20px/1.5 @sansFontFamily;
   color: @75-percent-black;
+
+  small {
+    font-size: 14px;
+  }
 }
 
 h3 {
@@ -400,7 +404,7 @@ pre {
 
 .hero-content-container {
   position: relative;
-  top: 150px;
+  top: 180px;
   z-index: 2;
   // display: none;
 }
@@ -527,7 +531,9 @@ pre {
   h6 {
     padding-bottom: 14px;
     color: #444;
-    font: bold 13px @sansFontFamily;
+    font-weight: normal;
+    font-size: 13px;
+    font-family: 'Univers Next W01 Bold';
     text-transform: uppercase;
     letter-spacing: 2px;
   }
@@ -540,6 +546,11 @@ pre {
     font: 13px @sansFontFamily;
     margin-bottom: 0;
     color: #444;
+  }
+
+  .sub-title {
+    margin-top: 20px;
+    color: #555;
   }
 }
 
@@ -601,6 +612,10 @@ pre {
   }
 }
 
+.index-buttons {
+  margin-top: 30px;
+}
+
 .open-source-previews p.reduced {
   margin: 10px 0;
 
@@ -610,6 +625,20 @@ pre {
 
   iframe {
     margin-bottom: -5px;
+  }
+}
+
+.product-preview .preview-box {
+  a {
+    margin-right: 5px;
+  }
+
+  img {
+    border: 1px solid #ddd;
+
+    &:hover {
+      border: 1px solid @highlight-blue;
+    }
   }
 }
 
@@ -636,6 +665,10 @@ pre {
   &.affix {
     position: fixed;
     top: 0;
+  }
+
+  &.affix-bottom {
+    position: absolute;
   }
 }
 
@@ -674,6 +707,8 @@ pre {
   padding-top: 30px;
   padding-bottom: 50px;
   background-color: #fff;
+  // Note: Because of footer
+  min-height: 770px;
 }
 
 .main-content-container-shadow {
