@@ -70,7 +70,7 @@ module.exports = function (grunt) {
         includeSourceURL: false,
         separator: "\n"
       },
-      "dist/ember-table.js":  "build/src/main.js",
+      "dist/ember-table-with-antiscroll.js":  "build/src/main.js",
       "gh_pages/app.js":      "build/app/app.js"
     },
 
@@ -187,9 +187,9 @@ module.exports = function (grunt) {
         },
 
         files: {
-          './dist/ember-table.min.js': [
+          './dist/ember-table-with-antiscroll.min.js': [
             // Include dist in bundle
-            './dist/ember-table.js'
+            './dist/ember-table-with-antiscroll.js'            
           ]
         }
       }

@@ -6,6 +6,9 @@ Ember.Table.VERSION = '0.0.2'
 
 Ember.libraries?.register 'Ember Table', Ember.Table.VERSION
 
+# Modified antiscroll for ember-table
+require 'dependencies/antiscroll/antiscroll'
+
 # Dependencies
 require 'dependencies/ember-addepar-mixins/resize_handler'
 require 'dependencies/ember-addepar-mixins/style_bindings'
